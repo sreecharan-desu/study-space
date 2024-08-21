@@ -1,8 +1,23 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 
 function App() {
   return (
     <>
+
+      <BrowserRouter>
+        <Routes>
+          <Route/>
+        </Routes>
+      </BrowserRouter>
+
+    </>
+  )
+}
+
+
+function CardComponent(){
+  return(<>
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="p-8 bg-white rounded shadow-md">
         <h1 className="text-2xl font-bold text-gray-800">Hello, Tailwind CSS!</h1>
@@ -14,8 +29,7 @@ function App() {
         </button>
       </div>
     </div>
-    </>
-  )
+  </>)
 }
 
 export default App
