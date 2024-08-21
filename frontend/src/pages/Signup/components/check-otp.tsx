@@ -1,5 +1,5 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { emai_sent, generate_message, message, message_status, otp, otp_try_count } from "../../store/store";
+import { emai_sent, generate_message, is_authenticated, message, message_status, otp, otp_try_count } from "../../store/store";
 import { useNavigate } from "react-router";
 
 export default function Button() {
@@ -24,6 +24,7 @@ export default function Button() {
 
     const [OTP, setOTP] = useRecoilState(otp);
     const [otpverifyCount,setCount] = useRecoilState(otp_try_count);
+    const [isAuthenticated,setisauthenticated] = useRecoilState(is_authenticated);
     const sendDataToBackend = () => {
             try {
                 setCount(otpverifyCount+1);
@@ -46,6 +47,7 @@ export default function Button() {
                         if(result.verified){
                             displayMessage("Verified you will be redirected to the home page",true)
                             navigateTo('/');
+                            setisauthenticated(true);
                         }else{
                             setCount(otpverifyCount+1);
                             displayMessage("Authentication failed try again",false) 

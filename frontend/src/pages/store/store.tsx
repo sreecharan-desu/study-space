@@ -83,3 +83,37 @@ export const otp_try_count = atom({
     key : 'otpAtomCount',
     default : 0
 })
+
+
+//spaces
+
+export const space_title = atom({
+    key : 'space_title',
+    default : ''
+})
+
+export const space_description = atom({
+    key : 'space_description',
+    default : ''
+})
+
+
+export const space_subject = atom({
+    key : 'space_subject',
+    default : ''
+})
+
+export const space_venue = atom({
+    key : 'space_venue',
+    default : ''
+})
+
+export const space_from_time = atom({
+    key : 'space_from_time',
+    default : new Date().getHours()
+})
+
+export const space_to_time = atom({
+    key : 'space_to_time',
+    default : new Date().getHours()
+})

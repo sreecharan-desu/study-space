@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { useNavigate } from 'react-router';
 import { useRecoilState } from 'recoil';
-import { emai_sent } from '../store/store';
+import { emai_sent, is_authenticated } from '../store/store';
 
 export default function Signup() {
     const WarningMessage = React.lazy(() => import('../Warning Message/warning-message'));
