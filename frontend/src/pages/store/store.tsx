@@ -55,3 +55,17 @@ export const signupPassword = atom({
     key : 'signupPassword',
     default : ''
 })
+
+
+//signin store
+
+export const signinEmail = atom({
+    key : 'signinEmail',
+    default : ''
+})
+
+
+export const signinPassword = atom({
+    key : 'signinPassword',
+    default : ''
+})

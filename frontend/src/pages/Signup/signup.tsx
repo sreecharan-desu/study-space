@@ -1,37 +1,17 @@
 import React, { Suspense } from 'react';
 import { useNavigate } from 'react-router';
-import { useRecoilState } from 'recoil';
-import { signupEmail, signupPassword, signupUsername } from '../store/store';
 
 export default function Signup() {
     const WarningMessage = React.lazy(() => import('../Warning Message/warning-message'));
-    const InputBox = React.lazy(() => import('../form-components/components/InputBox'));
-    const Sign = React.lazy(() => import('../form-components/components/sign-button'));
-
     const navigate = useNavigate();
 
-    const [username, setUsername] = useRecoilState(signupUsername);
-    const [email, setEmail] = useRecoilState(signupEmail);
-    const [password, setPassword] = useRecoilState(signupPassword);
+    const Username = React.lazy(()=>import('./components/username-input'))
+    const Email = React.lazy(()=>import('./components/email-input'))
+    const Password = React.lazy(()=>import('./components/password-input'))
+    const SignupButton = React.lazy(()=>import('./components/signup-button'))
 
     const onclickHandler = () => {
         navigate('/signin');
-    };
-
-    const UsernameHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(event.target.value);
-    };
-
-    const PasswordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(event.target.value);
-    };
-
-    const EmailHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.target.value);
-    };
-
-    const sendDataToBackend = () => {
-        alert(username);
     };
 
     return (
@@ -50,22 +30,22 @@ export default function Signup() {
                         </h1>
                         <label className="block mt-1 text-gray-600">
                             <Suspense fallback={<div>Loading...</div>}>
-                                <InputBox input_type="text" placeholder_text="John Doe" OnchangeFn={UsernameHandler} />
+                                <Username/>
                             </Suspense>
                         </label>
                         <label className="block mt-1 text-gray-600">
                             <Suspense fallback={<div>Loading...</div>}>
-                                <InputBox input_type="email" placeholder_text="7364734@iitb.ac.in" OnchangeFn={EmailHandler} />
+                                <Email/>
                             </Suspense>
                         </label>
                         <label className="block mt-1 text-gray-600">
                             <Suspense fallback={<div>Loading...</div>}>
-                                <InputBox input_type="password" placeholder_text="Password" OnchangeFn={PasswordHandler} />
+                                <Password/>
                             </Suspense>
                         </label>
                         <div>
                             <Suspense fallback={<div>Loading...</div>}>
-                                <Sign button_value="Signup" onclickFunction={sendDataToBackend} />
+                                <SignupButton/>
                             </Suspense>
                         </div>
                         <div className="mt-4 text-sm text-red-600 font-semibold text-center">
