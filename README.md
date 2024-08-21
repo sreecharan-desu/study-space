@@ -38,7 +38,7 @@
       npm run dev
   ```
 
-Open your browser and visit http://localhost:8182.
+Open your browser and visit http://localhost:5173.
 
 🛡️ Security
 Authentication: Secure user authentication using OTP.
