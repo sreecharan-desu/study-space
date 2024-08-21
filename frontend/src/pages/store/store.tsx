@@ -2,12 +2,12 @@ import { atom } from "recoil";
 
 export const user_rollnumber = atom({
     key : 'rollNo',
-    default : 'B123434'
+    default : ''
 })
 
 export const is_authenticated = atom({
     key : 'is_authenticated',
-    default : true
+    default : false
 })
 
 
