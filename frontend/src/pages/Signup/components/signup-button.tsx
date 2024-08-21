@@ -1,5 +1,6 @@
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
+    emai_sent,
     generate_message,
     message,
     message_status,
@@ -7,8 +8,12 @@ import {
     signupPassword,
     signupUsername
 } from "../../store/store";
+import { useNavigate } from "react-router";
 
 export default function Button() {
+
+    const navigateTo = useNavigate();
+    
     const username = useRecoilValue(signupUsername);
     const email = useRecoilValue(signupEmail);
     const password = useRecoilValue(signupPassword);
@@ -16,6 +21,8 @@ export default function Button() {
     const setGenerateMessage = useSetRecoilState(generate_message);
     const setMessage = useSetRecoilState(message);
     const setMessageStatus = useSetRecoilState(message_status);
+
+    const [email_sent,setEmailSent] = useRecoilState(emai_sent);
 
     const displayMessage = (message: string) => {
         setMessage(message);
@@ -37,7 +44,6 @@ export default function Button() {
                 const sendData = async () => {
                     const data = { username, email, password };
                     console.log(JSON.stringify(data));
-
                     const res = await fetch('------------------------------------------------', {
                         method: 'POST',
                         headers: {
@@ -45,11 +51,15 @@ export default function Button() {
                         },
                         body: JSON.stringify(data)
                     });
-
                     const result = await res.json();
-                    console.log(result);
-                };
 
+                    displayMessage("If the email enterd is valid you will recoieve an OTP.")
+                    if(result.emailsent){
+                        setEmailSent(true);
+                    }else{
+
+                    }
+                }
                 sendData();
             } catch (e) {
                 displayMessage('Error sending data to the backend, please try again!');
