@@ -20,9 +20,12 @@ export default function SpaceComp({heading="Chilling Session",subjectName="Discr
             {description}
         </p>
         <p className="mt-3 text-sm text-gray-900">
-            <div className="flex justify-start md:text-sm" style={{fontSize : '12px'}}>
-                {subjectName} &nbsp; <SmallDot/> &nbsp;  {time} &nbsp; <SmallDot/> &nbsp;  {venue} &nbsp;
-            </div>
+            <p className="flex justify-start md:text-sm" style={{fontSize : '14px'}}>
+                {subjectName} 
+            </p>
+            <p className="flex justify-start md:text-sm" style={{fontSize : '14px'}}>
+                {time} to {time} &nbsp; <SmallDot/> &nbsp;  {venue} &nbsp;
+            </p>
         </p>
         <div className="mt-4">
             <Button path="/signin" text="Join this space Now!"/>
