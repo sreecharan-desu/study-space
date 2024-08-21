@@ -1,5 +1,5 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { space_description, space_title } from "../../../../store/store";
+import { useSetRecoilState } from "recoil";
+import { space_description } from "../../../../store/store";
 
 
 export default function Title(){

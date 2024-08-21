@@ -1,9 +1,9 @@
-import { useRecoilState } from "recoil";
+import {useSetRecoilState } from "recoil";
 import { signinPassword } from "../store/store";
 
 
 export default function Email(){
-    const [password,setPassword] = useRecoilState(signinPassword);
+    const setPassword = useSetRecoilState(signinPassword);
     const PasswordHandler =(event:any)=>{
         setPassword(event.target.value);
     }

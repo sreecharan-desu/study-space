@@ -1,9 +1,9 @@
-import { useRecoilState } from "recoil";
+import {useSetRecoilState } from "recoil";
 import { signupUsername } from "../../store/store";
 
 
 export default function Username(){
-    const [username, setUsername] = useRecoilState(signupUsername);
+    const setUsername = useSetRecoilState(signupUsername);
     const UsernameHandler =(event:any)=>{
         setUsername(event.target.value);
     }

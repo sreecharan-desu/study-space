@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { useNavigate } from 'react-router';
-import { useRecoilState } from 'recoil';
-import { emai_sent, is_authenticated } from '../store/store';
+import { useRecoilValue } from 'recoil';
+import { emai_sent } from '../store/store';
 
 export default function Signup() {
     const WarningMessage = React.lazy(() => import('../Warning Message/warning-message'));
@@ -14,7 +14,7 @@ export default function Signup() {
     const OTP = React.lazy(()=>import('./components/OTP'));
     const OTP_BUTTON =  React.lazy(()=>import('./components/check-otp'))
 
-    const [email_sent,setEmailSent] = useRecoilState(emai_sent);
+    const email_sent= useRecoilValue(emai_sent);
 
     const onclickHandler = () => {
         navigate('/signin');

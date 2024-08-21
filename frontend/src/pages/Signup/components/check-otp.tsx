@@ -1,4 +1,4 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { emai_sent, generate_message, is_authenticated, message, message_status, otp, otp_try_count } from "../../store/store";
 import { useNavigate } from "react-router";
 
@@ -7,7 +7,7 @@ export default function Button() {
     const setMessage = useSetRecoilState(message);
     const setMessageStatus = useSetRecoilState(message_status);
 
-    const [email_sent,setEmailSent] = useRecoilState(emai_sent);
+    const setEmailSent = useSetRecoilState(emai_sent);
     const navigateTo = useNavigate();
 
     const displayMessage = (message: string,code : boolean) => {
@@ -22,9 +22,9 @@ export default function Button() {
         }, 3000);
     };
 
-    const [OTP, setOTP] = useRecoilState(otp);
+    const OTP = useRecoilValue(otp);
     const [otpverifyCount,setCount] = useRecoilState(otp_try_count);
-    const [isAuthenticated,setisauthenticated] = useRecoilState(is_authenticated);
+    const setisauthenticated = useSetRecoilState(is_authenticated);
     const sendDataToBackend = () => {
             try {
                 setCount(otpverifyCount+1);

@@ -1,9 +1,9 @@
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { otp } from "../../store/store";
 
 
 export default function Email(){
-    const [OTP, setOTP] = useRecoilState(otp);
+    const setOTP = useSetRecoilState(otp);
     const OTPHandler =(event:any)=>{
         setOTP(event.target.value);
     }

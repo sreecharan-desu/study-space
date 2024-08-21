@@ -1,9 +1,9 @@
-import { useRecoilState } from "recoil";
+import {useSetRecoilState } from "recoil";
 import { signupEmail } from "../../store/store";
 
 
 export default function Email(){
-    const [email, setEmail] = useRecoilState(signupEmail);
+    const setEmail = useSetRecoilState(signupEmail);
 
     const EmailHandler =(event:any)=>{
         setEmail(event.target.value);
