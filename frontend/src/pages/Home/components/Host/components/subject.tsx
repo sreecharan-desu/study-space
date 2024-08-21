@@ -1,9 +1,9 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { space_subject} from "../../../../store/store";
 
 
 export default function Title(){
-    const [subject,setsubject] = useRecoilState(space_subject);
+    const setsubject = useSetRecoilState(space_subject);
     const OnclikHandler =(event:any)=>{
         setsubject(event.target.value);
     }

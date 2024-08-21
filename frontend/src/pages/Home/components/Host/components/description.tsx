@@ -1,9 +1,9 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { space_description, space_title } from "../../../../store/store";
 
 
 export default function Title(){
-    const [description,setdescription] = useRecoilState(space_description);
+    const setdescription = useSetRecoilState(space_description);
     const DescHandler =(event:any)=>{
         setdescription(event.target.value);
     }

@@ -1,9 +1,9 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { space_to_time} from "../../../../store/store";
 
 
 export default function Title(){
-    const [time,settime] = useRecoilState(space_to_time);
+    const settime = useSetRecoilState(space_to_time);
     const OnclikHandler =(event:any)=>{
         settime(event.target.value);
     }
