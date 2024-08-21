@@ -8,11 +8,8 @@ import {
     signupPassword,
     signupUsername
 } from "../../store/store";
-import { useNavigate } from "react-router";
 
 export default function Button() {
-
-    const navigateTo = useNavigate();
     
     const username = useRecoilValue(signupUsername);
     const email = useRecoilValue(signupEmail);
@@ -24,9 +21,9 @@ export default function Button() {
 
     const [email_sent,setEmailSent] = useRecoilState(emai_sent);
 
-    const displayMessage = (message: string) => {
+    const displayMessage = (message: string,code : boolean) => {
         setMessage(message);
-        setMessageStatus(false); // code:red
+        setMessageStatus(code); // code:red
         setGenerateMessage(true);
 
         setTimeout(() => {
@@ -38,8 +35,10 @@ export default function Button() {
 
     const sendDataToBackend = () => {
         if (!email.includes('@')) {
-            displayMessage('Invalid Email');
+            displayMessage('Invalid Email',false);
         } else {
+            displayMessage("If the email entered is valid you will recieve an OTP.",true)
+            setEmailSent(true);
             try {
                 const sendData = async () => {
                     const data = { username, email, password };
@@ -52,17 +51,14 @@ export default function Button() {
                         body: JSON.stringify(data)
                     });
                     const result = await res.json();
-
-                    displayMessage("If the email enterd is valid you will recoieve an OTP.")
+                    displayMessage("If the email enterd is valid you will recoieve an OTP.",true)
                     if(result.emailsent){
                         setEmailSent(true);
-                    }else{
-
                     }
                 }
                 sendData();
             } catch (e) {
-                displayMessage('Error sending data to the backend, please try again!');
+                displayMessage('Error sending data to the backend, please try again!',false);
             }
         }
     };

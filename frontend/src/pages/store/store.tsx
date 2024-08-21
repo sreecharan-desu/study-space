@@ -69,3 +69,17 @@ export const signinPassword = atom({
     key : 'signinPassword',
     default : ''
 })
+
+
+//otp
+
+export const otp = atom({
+    key : 'otp',
+    default : ''
+})
+
+
+export const otp_try_count = atom({
+    key : 'otpAtomCount',
+    default : 0
+})

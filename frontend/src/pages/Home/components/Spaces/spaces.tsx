@@ -1,9 +1,43 @@
-import React, { Suspense } from "react"
+import React, { Suspense, useEffect } from "react"
+import { useRecoilState } from "recoil";
+import { spaces } from "../../../store/store";
 const SpaceComp = React.lazy(()=>import('./space-component'));
 export default function Spaces(){
 
+    const [Spacess,setSpaces] = useRecoilState(spaces);
+    useEffect(()=>{
+        const getSpaces = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                
+                if (!token) {
+                    console.error('No token found in localStorage');
+                    return;
+                }
+        
+                const res = await fetch('API_ENDPOINT_HERE', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': JSON.parse(token)
+                    }
+                });
+        
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+        
+                const data = await res.json();
+                setSpaces(data.spaces);
+        
+            } catch (error) {
+                console.error('Error fetching spaces:', error);
+            }
+        };
+        
+        getSpaces();
 
-    const spaces = [1,2,3,4,5];
+    },[])
 
     return<>
     <Suspense fallback="Loading...">
@@ -11,7 +45,7 @@ export default function Spaces(){
             Welcome to StudySpace!
         </div>
         <div className="grid grid-cols-1 justify-center md:grid-cols-3 lg:grid-cols-2">
-            {spaces.map(()=>{
+            {Spacess.map(()=>{
                 return(<>
                     <Suspense fallback="Loading...">
                         <SpaceComp heading="Chilling Session" subjectName="Discrete Mathematics" description="Join for an enthusiastic basic covergae lets dvelve deep into the topics and have a freindly conversation." time="6:45 PM" venue="Seminar hall"/>            
