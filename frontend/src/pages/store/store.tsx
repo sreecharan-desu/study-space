@@ -34,7 +34,16 @@ export const emai_sent = atom({
 
 export const spaces = atom({
     key : 'spaces',
-    default : []
+    default : [{
+        space_id : '',
+        title : '',
+        description : '', 
+        venue : '',
+        subject : '',
+        fromtime : '',
+        totime : '',
+        expiry_date : ''
+    }]
 })
 
 
