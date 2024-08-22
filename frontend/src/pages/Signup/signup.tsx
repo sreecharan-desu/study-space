@@ -54,7 +54,7 @@ export default function Signup() {
                                 </Suspense>
                                 <Suspense fallback={<div>Loading Password Input...</div>}>
                                     <PasswordInput />
-                                </Suspense>
+                                </Suspense><br />
                                 <Suspense fallback={<div>Loading Signup Button...</div>}>
                                     <SignupButton />
                                 </Suspense>
