@@ -13,7 +13,7 @@ export const is_authenticated = atom({
 
 export const generate_message = atom({
     key: 'generate_message',
-    default: false
+    default: true
 });
 
 export const message_status = atom({

@@ -65,7 +65,7 @@ export default function SignupButton() {
         <input
             type="button"
             value="Signup"
-            className="p-2 m-2 rounded-md"
+            className="p-2 m-2 rounded-md hover:bg-black hover:text-white cursor-pointer font-bold"
             style={{ border: '2px solid black' }}
             onClick={sendDataToBackend}
         />

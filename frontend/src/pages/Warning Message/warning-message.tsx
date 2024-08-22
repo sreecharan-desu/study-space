@@ -9,11 +9,10 @@ export default function WarningMessage() {
     if (!messageVisibility) {
         return null;
     }
-
     return (
         <div className="flex justify-center">
             {messageBackground ? (
-                <div className="bg-green-500 rounded-md p-5 text-sm md:text-xl">
+                <div className="lex bg-green-500 rounded-md p-5 text-sm md:text-lg md:font-bold md:m-10 md:w-1/2 md:justify-center">
                     {messageValue}
                 </div>
             ) : (
