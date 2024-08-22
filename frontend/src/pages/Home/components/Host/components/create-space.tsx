@@ -1,4 +1,5 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { CREATE_SPACE_API } from "../../../../apis/apis";
 import {
   generate_message,
   message,
@@ -55,7 +56,7 @@ export default function CreateSpace() {
             displayMessage("No token found in localStorage", false);
             return;
           }
-          const res = await fetch("API_ENDPOINT_HERE", {
+          const res = await fetch(CREATE_SPACE_API, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

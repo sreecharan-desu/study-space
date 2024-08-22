@@ -18,7 +18,8 @@ export default function Navbar() {
           </Suspense>
         </div>
         <div className="flex justify-between">
-          {authenticated ? (
+          {authenticated ? 
+          (
             <Suspense fallback="Loading...">
               <Heading text={rollNumber} />
             </Suspense>

@@ -1,16 +1,20 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { USER_SIGNIN_API } from "../apis/apis";
 import {
     generate_message,
+    is_authenticated,
     message,
     message_status,
     signinEmail,
     signinPassword
 } from "../store/store";
+import { useNavigate } from "react-router";
 
 export default function SigninButton() {
     const email = useRecoilValue(signinEmail);
     const password = useRecoilValue(signinPassword);
-
+    const setIsAuthenticated = useSetRecoilState(is_authenticated);
+    const navigateTo = useNavigate();
     const setGenerateMessage = useSetRecoilState(generate_message);
     const setMessage = useSetRecoilState(message);
     const setMessageStatus = useSetRecoilState(message_status);
@@ -31,19 +35,20 @@ export default function SigninButton() {
                 const sendData = async () => {
                     const data = { email, password };
                     console.log(JSON.stringify(data));
-
-                    const res = await fetch('API_ENDPOINT_HERE', {
+                    const res = await fetch(USER_SIGNIN_API, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(data)
                     });
-
                     const result = await res.json();
-                    console.log(result);
+                    localStorage.setItem('token',JSON.stringify(result.token));
+                    if(result.success){
+                        setIsAuthenticated(true);
+                        navigateTo('/')
+                    }
                 };
-
                 sendData();
             } catch (e) {
                 setMessage('Error sending data to the backend, please try again!');

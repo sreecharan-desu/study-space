@@ -1,4 +1,5 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { USER_SIGNUP_API } from "../../apis/apis";
 import {
     email_sent,
     generate_message,
@@ -38,7 +39,7 @@ export default function SignupButton() {
             displayMessage("Processing your signup request...", true);
             try {
                 const data = { username, email, password };
-                const response = await fetch('API_ENDPOINT_HERE', {
+                const response = await fetch(USER_SIGNUP_API, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

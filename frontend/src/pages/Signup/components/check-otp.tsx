@@ -1,6 +1,7 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { email_sent, generate_message, is_authenticated, message, message_status, otp, otp_try_count } from "../../store/store";
 import { useNavigate } from "react-router";
+import { VERIFY_OTP_API } from "../../apis/apis";
 
 export default function VerifyOTP() {
     const setGenerateMessage = useSetRecoilState(generate_message);
@@ -37,7 +38,7 @@ export default function VerifyOTP() {
                 const data = { OTP };
                 console.log(JSON.stringify(data));
 
-                const res = await fetch('API_ENDPOINT_HERE', {
+                const res = await fetch(VERIFY_OTP_API, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

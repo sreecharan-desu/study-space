@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { spaces } from "../../../store/store";
+import { FETCH_SPACES_API } from "../../../apis/apis";
 
 const SpaceComp = React.lazy(() => import('./space-component'));
 
@@ -17,7 +18,7 @@ export default function Spaces() {
           return;
         }
 
-        const res = await fetch('API_ENDPOINT_HERE', {
+        const res = await fetch(FETCH_SPACES_API, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
