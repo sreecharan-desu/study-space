@@ -1,6 +1,6 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
-    emai_sent,
+    email_sent,
     generate_message,
     message,
     message_status,
@@ -17,7 +17,7 @@ export default function SignupButton() {
     const setGenerateMessage = useSetRecoilState(generate_message);
     const setMessage = useSetRecoilState(message);
     const setMessageStatus = useSetRecoilState(message_status);
-    const setEmailSent = useSetRecoilState(emai_sent);
+    const setEmailSent = useSetRecoilState(email_sent);
 
     const displayMessage = (msg: string, isSuccess: boolean) => {
         setMessage(msg);
