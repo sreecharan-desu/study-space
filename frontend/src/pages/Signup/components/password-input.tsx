@@ -1,13 +1,20 @@
-import {useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { signupPassword } from "../../store/store";
 
-
-export default function Email(){
+export default function PasswordInput() {
     const setPassword = useSetRecoilState(signupPassword);
-    const PasswordHandler =(event:any)=>{
+
+    const PasswordHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
-    }
-    return(<>
-        <input type={'password'} placeholder={'Enter your password'} className="p-2 m-2 rounded-md" style={{ border: '2px solid black' }} onChange={PasswordHandler}/>                        
-    </>)
+    };
+
+    return (
+        <input
+            type="password"
+            placeholder="Enter your password"
+            className="p-2 m-2 rounded-md"
+            style={{ border: '2px solid black' }}
+            onChange={PasswordHandler}
+        />
+    );
 }

@@ -1,4 +1,4 @@
-import {useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
     emai_sent,
     generate_message,
@@ -9,8 +9,7 @@ import {
     signupUsername
 } from "../../store/store";
 
-export default function Button() {
-    
+export default function SignupButton() {
     const username = useRecoilValue(signupUsername);
     const email = useRecoilValue(signupEmail);
     const password = useRecoilValue(signupPassword);
@@ -18,60 +17,57 @@ export default function Button() {
     const setGenerateMessage = useSetRecoilState(generate_message);
     const setMessage = useSetRecoilState(message);
     const setMessageStatus = useSetRecoilState(message_status);
-
     const setEmailSent = useSetRecoilState(emai_sent);
 
-    const displayMessage = (message: string,code : boolean) => {
-        setMessage(message);
-        setMessageStatus(code); // code:red
+    const displayMessage = (msg: string, isSuccess: boolean) => {
+        setMessage(msg);
+        setMessageStatus(isSuccess); // true = success (green), false = error (red)
         setGenerateMessage(true);
 
         setTimeout(() => {
             setGenerateMessage(false);
             setMessage('');
-            setMessageStatus(true); // code:green
+            setMessageStatus(true); // reset to green after timeout
         }, 3000);
     };
 
-    const sendDataToBackend = () => {
+    const sendDataToBackend = async () => {
         if (!email.includes('@')) {
-            displayMessage('Invalid Email',false);
+            displayMessage('Invalid email address. Please enter a valid email.', false);
         } else {
-            displayMessage("If the email entered is valid you will recieve an OTP.",true)
+            displayMessage("Processing your signup request...", true);
             setEmailSent(true);
+
             try {
-                const sendData = async () => {
-                    const data = { username, email, password };
-                    console.log(JSON.stringify(data));
-                    const res = await fetch('------------------------------------------------', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
-                    const result = await res.json();
-                    displayMessage("If the email enterd is valid you will recoieve an OTP.",true)
-                    if(result.emailsent){
-                        setEmailSent(true);
-                    }
+                const data = { username, email, password };
+                const response = await fetch('API_ENDPOINT_HERE', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.emailSent) {
+                    displayMessage("A verification email has been sent. Please check your inbox.", true);
+                } else {
+                    displayMessage("An error occurred. Please try again.", false);
                 }
-                sendData();
-            } catch (e) {
-                displayMessage('Error sending data to the backend, please try again!',false);
+            } catch (error) {
+                displayMessage('Error sending data to the backend. Please try again later.', false);
             }
         }
     };
 
     return (
-        <>
-            <input
-                type="button"
-                value="Signup"
-                className="p-2 m-2 rounded-md"
-                style={{ border: '2px solid black' }}
-                onClick={sendDataToBackend}
-            />
-        </>
+        <input
+            type="button"
+            value="Signup"
+            className="p-2 m-2 rounded-md"
+            style={{ border: '2px solid black' }}
+            onClick={sendDataToBackend}
+        />
     );
 }
