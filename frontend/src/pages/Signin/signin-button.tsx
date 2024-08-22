@@ -34,7 +34,6 @@ export default function SigninButton() {
             try {
                 const sendData = async () => {
                     const data = { email, password };
-                    console.log(JSON.stringify(data));
                     const res = await fetch(USER_SIGNIN_API, {
                         method: 'POST',
                         headers: {
@@ -47,6 +46,10 @@ export default function SigninButton() {
                     if(result.success){
                         setIsAuthenticated(true);
                         navigateTo('/')
+                    }else{
+                        setMessage('Invalid Credentials, please try again!');
+                        setMessageStatus(false); // code: red
+                        setGenerateMessage(true);   
                     }
                 };
                 sendData();
