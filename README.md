@@ -35,7 +35,7 @@
   ```
 3. Run Website
   ```
-      npm run dev
+  npm run dev
   ```
 
 Open your browser and visit http://localhost:5173.
