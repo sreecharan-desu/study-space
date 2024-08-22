@@ -25,7 +25,7 @@ export default function Navbar() {
             </Suspense>
           ) : (
             <Suspense fallback="Loading...">
-              <Button text="Create a Space" path="/createspace" />
+              <Button text="Create a Space" space_id=""/>
             </Suspense>
           )}
         </div>

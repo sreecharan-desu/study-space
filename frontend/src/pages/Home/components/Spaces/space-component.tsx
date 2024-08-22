@@ -36,7 +36,7 @@ export default function SpaceComp({
             </p>
           </p>
           <div className="mt-4">
-            <Button text="Join this space Now!"/>
+            <Button text="Join this space Now!" space_id={space_id}/>
           </div>
         </div>
       </div>

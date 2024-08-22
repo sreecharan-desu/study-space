@@ -4,10 +4,11 @@ import { generate_message, is_authenticated, message, message_status } from "../
 import { JOIN_SPACE_API } from "../../../apis/apis";
 
 type PropsType = {
-  text: string;
+  text: string
+  space_id : string,
 };
 
-export default function Button({ text }: PropsType) {
+export default function Join_Create_Space({ text,space_id }: PropsType) {
   const setGenerateMessage = useSetRecoilState(generate_message);
   const setMessage = useSetRecoilState(message);
   const setMessageStatus = useSetRecoilState(message_status);
@@ -25,9 +26,9 @@ export default function Button({ text }: PropsType) {
     }, 3000);
   }
 
-  const onClickHandler = () => {
+  const onClickHandler = (space_id:string) => {
     if(isAuthenticated){
-      const JoinSpace = async(space_id:string)=>{
+      const JoinSpace = async()=>{
         const tokenString = localStorage.getItem('token');
         const token = tokenString ? JSON.parse(tokenString) : null;
         const bodyData = JSON.stringify({
@@ -48,18 +49,20 @@ export default function Button({ text }: PropsType) {
           displayMessage(data.msg || "Failed to joined the space please try again!",false)
         }
       }
+      JoinSpace();
     }else{
-      displayMessage('You need to Signin to join the space!',false);
+      displayMessage('You need to Signin to join or to create the space!',false);
       navigateTo('/signin')
     }
   };
+
 
   return (
     <>
       <button
         className="px-4 py-1 bg-white text-black hover:bg-black hover:text-white font-semibold rounded ml-2"
         style={{ border: '2px solid black' }}
-        onClick={onClickHandler}
+        onClick={()=>onClickHandler(space_id)}
       >
         {text}
       </button>
