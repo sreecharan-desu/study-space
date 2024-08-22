@@ -36,8 +36,6 @@ export default function SignupButton() {
             displayMessage('Invalid email address. Please enter a valid email.', false);
         } else {
             displayMessage("Processing your signup request...", true);
-            setEmailSent(true);
-
             try {
                 const data = { username, email, password };
                 const response = await fetch('API_ENDPOINT_HERE', {
@@ -49,9 +47,9 @@ export default function SignupButton() {
                 });
 
                 const result = await response.json();
-
                 if (result.emailSent) {
                     displayMessage("A verification email has been sent. Please check your inbox.", true);
+                    setEmailSent(true);
                 } else {
                     displayMessage("An error occurred. Please try again.", false);
                 }
