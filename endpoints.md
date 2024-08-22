@@ -25,7 +25,7 @@
 
 ##  API'S REQUIRED
 
--  For recieving 
+- 1. For recieving 
     {
         username,
         password,
@@ -39,7 +39,7 @@
         success : true
     }
 
-- For recieving 
+- 2. For recieving 
     {
         otp
     }
@@ -51,7 +51,7 @@
         success : true
     }
 
-- For recieving 
+- 3. For recieving 
     {
         email,
         password
@@ -63,7 +63,7 @@
         success : true
     }
 
-- For recieving
+- 4. For recieving
 
     {
         Authorization :  'Bearer ' + token
@@ -74,7 +74,7 @@
         username
     }
 
-- For recieving
+- 5. For recieving
 
     {
         Authorization :  'Bearer ' + token
@@ -85,7 +85,7 @@
         all_spaces_excluding_spaces_created_by_user as "spaces"
     }
 
-- For recieving
+- 6. For recieving
 
     {
         Authorization :  'Bearer ' + token,
@@ -110,7 +110,7 @@
     }
 
 
-- For recieving
+- 7. For recieving
 
     {
         Authorization :  'Bearer ' + token
@@ -125,7 +125,7 @@
     }
 
 
-- For recieving all the spaces that user registered by taking 
+- 8. For recieving all the spaces that user registered by taking 
 
     {
         Authorization :  'Bearer ' + token
@@ -137,7 +137,7 @@
         success : true
     }
 
-- For recieving all the spaces that user created by taking 
+- 9. For recieving all the spaces that user created by taking 
 
     {
         Authorization :  'Bearer ' + token
