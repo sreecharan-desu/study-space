@@ -54,7 +54,6 @@ export default function SigninButton() {
                 setMessage('Error sending data to the backend, please try again!');
                 setMessageStatus(false); // code: red
                 setGenerateMessage(true);
-
                 setTimeout(() => {
                     setGenerateMessage(false);
                     setMessage('');
