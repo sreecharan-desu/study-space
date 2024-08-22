@@ -19,7 +19,6 @@
 
 ### Prerequisites
 
-- Node.js
 - npm (or yarn)
 
 ### Installation
