@@ -12,7 +12,7 @@
 ## 🛠️ Technologies Used
 
 - **Frontend**: React,TypeScript,Tailwind CSS
-- **Backend**: Ruby on Rails
+- **Backend**: Express,mongoose,JWT for auth
 - **Hosting**: Vercel
 
 ## 🚀 Getting Started
