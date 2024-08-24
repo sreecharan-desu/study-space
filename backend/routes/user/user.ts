@@ -54,11 +54,10 @@ userRoute.post("/verifysecuritycode", async (req: Request, res: Response) => {
       msg: "Invalid Security Code! Please sign up again.",
       success: false,
     });
-  
+  }
 });
 
 userRoute.post("/signin", (req: Request, res: Response) => {
-  const { authorization } = req.headers;
+  const authorization = req.headers.authorization;
   // const token = authorization.split(" ")[1];
-  // console.log(token)
 });
