@@ -9,6 +9,7 @@ import {
   otp_try_count,
 } from "../../store/store";
 import { useNavigate } from "react-router";
+import { VERIFY_OTP_API } from "../../apis/apis";
 
 export default function VerifyOTP() {
   const setGenerateMessage = useSetRecoilState(generate_message);
@@ -51,16 +52,13 @@ export default function VerifyOTP() {
         const data = { email, securitycode: OTP };
         console.log(JSON.stringify(data));
 
-        const res = await fetch(
-          "http://localhost:3000/api/v1/user/verifysecuritycode",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }
-        );
+        const res = await fetch(VERIFY_OTP_API, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
 
         const result = await res.json();
         if (result.success) {
