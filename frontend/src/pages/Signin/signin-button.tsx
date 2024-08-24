@@ -8,7 +8,6 @@ import {
   signinPassword,
 } from "../store/store";
 import { useNavigate } from "react-router";
-import { USER_SIGNIN_API } from "../apis/apis";
 
 export default function SigninButton() {
   const email = useRecoilValue(signinEmail);
@@ -35,13 +34,13 @@ export default function SigninButton() {
         const sendData = async () => {
           const data = { email, password };
           console.log(data);
-          if (!email.includes("@iitb.ac.in")) {
-            setMessage("We are currently available in only IITB!");
-            setMessageStatus(false); // code: red
-            setGenerateMessage(true);
-            return;
-          }
-          const res = await fetch(USER_SIGNIN_API, {
+          // if (!email.includes("@iitb.ac.in")) {
+          //   setMessage("We are currently available in only IITB!");
+          //   setMessageStatus(false); // code: red
+          //   setGenerateMessage(true);
+          //   return;
+          // }
+          const res = await fetch("http://localhost:3000/api/v1/user/signin", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -50,6 +49,7 @@ export default function SigninButton() {
           });
           const result = await res.json();
           localStorage.setItem("token", JSON.stringify(result.token));
+          localStorage.removeItem("email");
           if (result.success) {
             setIsAuthenticated(true);
             navigateTo("/");

@@ -46,7 +46,6 @@ userRoute.post(
     const { username, password, email } = req.body;
     try {
       const emailStatus = await sendEmailToUser(email, username);
-
       if (emailStatus.success) {
         const saltRounds = 10; // Use more rounds for better security
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -58,11 +57,11 @@ userRoute.post(
         });
         res
           .status(201)
-          .json({ message: emailStatus.msg, success: emailStatus.success });
+          .json({ msg: emailStatus.msg, success: emailStatus.success });
       } else {
         res
           .status(400)
-          .json({ message: emailStatus.msg, success: emailStatus.success });
+          .json({ msg: emailStatus.msg, success: emailStatus.success });
       }
     } catch (error) {
       console.error("Error during signup:", error);
@@ -183,11 +182,13 @@ userRoute.post(
       description,
       subject,
       venue,
-      form_time,
+      from_time,
       to_time,
       date_created,
       expiry,
     } = req.body;
+
+    // console.log();
 
     const authorization = req.headers.authorization;
     if (!authorization) {
@@ -199,9 +200,21 @@ userRoute.post(
     try {
       const email = await getEmailFromToken(authorization);
       const user_Id = await getUserIdByEmail(email);
-      const baseDate = new Date(date_created);
-      const fromTime = new Date(`${baseDate.toDateString()} ${form_time}`);
-      const toTime = new Date(`${baseDate.toDateString()} ${to_time}`);
+      // Get today's date to use with the time values
+      const today = new Date();
+      const baseDate = today.toISOString().split("T")[0]; // 'YYYY-MM-DD' format
+
+      // Combine the date with the time strings
+      const fromTime = new Date(`${baseDate}T${from_time}:00Z`);
+      const toTime = new Date(`${baseDate}T${to_time}:00Z`);
+
+      // Validate the created Date objects
+      if (isNaN(fromTime.getTime()) || isNaN(toTime.getTime())) {
+        return res.status(400).json({
+          msg: `Invalid time provided, ${email}`,
+        });
+      }
+
       const space = await Spaces.create({
         Title: title,
         Description: description,
@@ -209,8 +222,6 @@ userRoute.post(
         Subject: subject,
         FromTime: fromTime,
         ToTime: toTime,
-        DateCreatedOn: new Date(date_created),
-        Expiry: expiry,
         Creator: user_Id,
         Users: [],
       });
@@ -228,7 +239,7 @@ userRoute.post(
         success: true,
       });
     } catch (error) {
-      console.error("Error creating space:", error);
+      console.error("Error creating space:" + error);
       res.status(500).json({
         msg: "Internal server error",
       });

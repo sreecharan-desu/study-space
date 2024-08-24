@@ -1,5 +1,4 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { USER_SIGNUP_API } from "../../apis/apis";
 import {
   email_sent,
   generate_message,
@@ -46,23 +45,25 @@ export default function SignupButton() {
       displayMessage("Processing your signup request...", true);
       try {
         const data = { username, email, password };
-        const response = await fetch(USER_SIGNUP_API, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-
+        console.log(data);
+        const response = await fetch(
+          "http://localhost:3000/api/v1/user/signup",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
         const result = await response.json();
-        if (result.emailSent) {
-          displayMessage(
-            "A verification email has been sent. Please check your inbox.",
-            true
-          );
+        console.log(result);
+        if (result.success) {
+          localStorage.setItem("email", JSON.stringify(email));
+          displayMessage(result.msg, result.success);
           setEmailSent(true);
         } else {
-          displayMessage("An error occurred. Please try again.", false);
+          displayMessage(result.msg, result.success);
         }
       } catch (error) {
         displayMessage(

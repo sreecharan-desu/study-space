@@ -2,8 +2,8 @@ import React, { Suspense } from "react";
 import { useRecoilValue } from "recoil";
 import { is_authenticated, user_rollnumber } from "../../../store/store";
 
-const Button = React.lazy(() => import('./Button'));
-const Heading = React.lazy(() => import('./navbar-heading'));
+const Button = React.lazy(() => import("./Button"));
+const Heading = React.lazy(() => import("./navbar-heading"));
 
 export default function Navbar() {
   const authenticated = useRecoilValue(is_authenticated);
@@ -18,14 +18,13 @@ export default function Navbar() {
           </Suspense>
         </div>
         <div className="flex justify-between">
-          {authenticated ? 
-          (
+          {authenticated ? (
             <Suspense fallback="Loading...">
-              <Heading text={rollNumber} />
+              <Heading text={"Hello, " + rollNumber} />
             </Suspense>
           ) : (
             <Suspense fallback="Loading...">
-              <Button text="Create a Space" space_id=""/>
+              <Button text="Create a Space" space_id="" />
             </Suspense>
           )}
         </div>

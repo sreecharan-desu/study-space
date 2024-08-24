@@ -12,7 +12,7 @@ export default function Description() {
     <>
       <input
         type={"text"}
-        placeholder={"Title"}
+        placeholder={"Description"}
         className="p-2 m-2 rounded-md"
         style={{ border: "2px solid black" }}
         onChange={descHandler}

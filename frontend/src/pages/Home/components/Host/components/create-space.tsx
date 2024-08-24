@@ -1,5 +1,4 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { CREATE_SPACE_API } from "../../../../apis/apis";
 import {
   generate_message,
   message,
@@ -32,13 +31,18 @@ export default function CreateSpace() {
   const title = useRecoilValue(space_title);
   const description = useRecoilValue(space_description);
   const venue = useRecoilValue(space_venue);
-  const FromTime = useRecoilValue(space_from_time);
-  const ToTime = useRecoilValue(space_to_time);
+  const from_time = useRecoilValue(space_from_time);
+  const to_time = useRecoilValue(space_to_time);
   const subject = useRecoilValue(space_subject);
 
   const onclickhandler = async () => {
     const createSpace = async () => {
-      if (title === "" || description === "" || venue === "" || subject === "") {
+      if (
+        title === "" ||
+        description === "" ||
+        venue === "" ||
+        subject === ""
+      ) {
         alert("Please fill in all the details to create a space!");
       } else {
         try {
@@ -47,23 +51,25 @@ export default function CreateSpace() {
             title,
             description,
             venue,
-            FromTime,
-            ToTime,
+            from_time,
+            to_time,
             subject,
           });
-          console.log(bodyData);
           if (!token) {
             displayMessage("No token found in localStorage", false);
             return;
           }
-          const res = await fetch(CREATE_SPACE_API, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: JSON.parse(token),
-            },
-            body: bodyData,
-          });
+          const res = await fetch(
+            "http://localhost:3000/api/v1/user/addspace",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + JSON.parse(token),
+              },
+              body: bodyData,
+            }
+          );
 
           if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);

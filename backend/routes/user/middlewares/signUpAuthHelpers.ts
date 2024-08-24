@@ -48,8 +48,8 @@ export const userSignupForminputValidation: RequestHandler = (
 };
 
 // Function to find a user by username
-export const findUserByUsername = async (username: string) => {
-  const user = await Users.findOne({ Username: username });
+export const findUserByUsername = async (email: string) => {
+  const user = await Users.findOne({ Email: email });
   return user !== null;
 };
 
@@ -69,8 +69,7 @@ export const CheckIfUserPresent: RequestHandler = async (
   next: NextFunction
 ) => {
   const { username, password, email } = req.body;
-  const userExists = await findUserByUsername(username);
-
+  const userExists = await findUserByUsername(email);
   if (userExists) {
     const user = await findUserByData(username, password);
     if (user) {
