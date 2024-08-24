@@ -29,12 +29,12 @@ export const validateSigninForm: RequestHandler = (
   } else {
     let errorString = "";
     verification.error.errors.forEach((err) => {
-      const errString = `${err.path.join(".")} ${err.message}`;
+      const errString = `${err.message}`;
       errorString += errString + ",";
     });
 
     res.status(400).json({
-      error: errorString.slice(0, -1), // Removing the trailing comma
+      msg: errorString.slice(0, -1), // Removing the trailing comma
       success: false,
     });
   }
