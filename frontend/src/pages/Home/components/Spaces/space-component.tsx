@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+// import { useEffect } from "react";
+// import { useRecoilState } from "recoil";
 import Button from "../Navbar/Button";
-import { joinedSpaces } from "../../../store/store";
-import { JOINED_SPACES_API } from "../../../apis/apis";
+// import { joinedSpaces } from "../../../store/store";
+// import { JOINED_SPACES_API } from "../../../apis/apis";
 
 type SpaceProps = {
   space_id: string;
@@ -29,39 +29,39 @@ export default function SpaceComp({
   time = "6:45 PM",
   venue = "Seminar hall",
 }: SpaceProps) {
-  const [JoinedSpaces, setJoinedSpaces] =
-    useRecoilState<string[]>(joinedSpaces);
+  // const [JoinedSpaces, setJoinedSpaces] =
+  //   useRecoilState<string[]>(joinedSpaces);
 
-  useEffect(() => {
-    const fetchJoinedSpaces = async () => {
-      const tokenString = localStorage.getItem("token");
-      const token = tokenString ? JSON.parse(tokenString) : null;
+  // useEffect(() => {
+  //   const fetchJoinedSpaces = async () => {
+  //     const tokenString = localStorage.getItem("token");
+  //     const token = tokenString ? JSON.parse(tokenString) : null;
 
-      try {
-        const response = await fetch(JOINED_SPACES_API, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  //     try {
+  //       const response = await fetch(JOINED_SPACES_API, {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
 
-        const data = await response.json();
+  //       const data = await response.json();
 
-        if (data.success) {
-          setJoinedSpaces(data.spaces);
-        } else {
-          console.error(data.msg);
-        }
-      } catch (error) {
-        console.error("Error fetching joined spaces:", error);
-      }
-    };
+  //       if (data.success) {
+  //         setJoinedSpaces(data.spaces);
+  //       } else {
+  //         console.error(data.msg);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching joined spaces:", error);
+  //     }
+  //   };
 
-    fetchJoinedSpaces();
-  }, [setJoinedSpaces]);
+  //   fetchJoinedSpaces();
+  // }, [setJoinedSpaces]);
 
-  const isJoined: boolean = JoinedSpaces.includes(space_id);
+  // const isJoined: boolean = JoinedSpaces.includes(space_id);
 
   return (
     <div className="flex items-center justify-center" title={space_id}>
@@ -84,10 +84,7 @@ export default function SpaceComp({
           </span>
         </p>
         <div className="mt-4">
-          <Button
-            text={isJoined ? "Joined" : "Join this space Now!"}
-            space_id={isJoined ? "" : space_id}
-          />
+          <Button text={"Join this space Now!"} space_id={space_id} />
         </div>
       </div>
     </div>
