@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import zod from "zod";
 import { Users } from "../../../db/db";
+import nodemailer from "nodemailer";
 
 export const userSignupForminputValidation: Function = (
   req: Request,
@@ -88,4 +89,30 @@ export const CheckIfUserPresent: Function = async (
   } else {
     next();
   }
+};
+
+// Function to send an email
+export const sendEmailToUser = async (email: string) => {
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "sreecharan309@gmail.com",
+      pass: "***REMOVED***",
+    },
+  });
+
+  var mailOptions = {
+    from: "sreecharan309@gmail.com",
+    to: email,
+    subject: "Sending Email using Node.js",
+    text: "That was easy!",
+  };
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
 };
