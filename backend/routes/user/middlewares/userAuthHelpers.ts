@@ -1,21 +1,21 @@
-import { Request, Response, NextFunction } from "express";
-import zod, { number } from "zod";
+import { Request, Response, NextFunction, RequestHandler } from "express";
+import zod from "zod";
 import { Users } from "../../../db/db";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import { error } from "console";
+
 dotenv.config();
 
-export const userSignupForminputValidation: Function = (
+// Middleware for validating signup form input
+export const userSignupForminputValidation: RequestHandler = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const { username, password, email } = req.body;
-  const signupInputs = {
-    username,
-    password,
-    email,
-  };
+  const signupInputs = { username, password, email };
+
   const zodSchemaforValidation = zod.object({
     username: zod
       .string()
@@ -25,32 +25,37 @@ export const userSignupForminputValidation: Function = (
       .min(8, { message: "Password must be at least 8 characters long." }),
     email: zod.string().email({ message: "Invalid email address." }),
   });
+
   const verification = zodSchemaforValidation.safeParse(signupInputs);
+
   if (verification.success) {
     console.log("Inputs Validated");
     next();
   } else {
+    let errorString: string = "";
     const errors = verification.error.errors.map((err) => ({
+      path: err.path,
       message: err.message,
     }));
+    errors.map((err) => {
+      let errString = err.path + " " + err.message;
+      errorString += errString + ",";
+    });
+
     res.status(400).json({
-      errors,
+      error: errorString,
       success: false,
     });
   }
 };
 
+// Function to find a user by username
 export const findUserByUsername = async (username: string) => {
-  const user = await Users.findOne({
-    Username: username,
-  });
-  if (user == null) {
-    return false;
-  } else {
-    return true;
-  }
+  const user = await Users.findOne({ Username: username });
+  return user !== null;
 };
 
+// Function to find a user by username, password, and email
 export const findUserByData = async (
   username: string,
   password: string,
@@ -61,30 +66,29 @@ export const findUserByData = async (
     Password: password,
     Email: email,
   });
-  if (user == null) {
-    return false;
-  } else {
-    return true;
-  }
+  return user !== null;
 };
 
-export const CheckIfUserPresent: Function = async (
+// Middleware for checking if a user is present
+export const CheckIfUserPresent: RequestHandler = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const { username, password, email } = req.body;
-  const user = await findUserByUsername(username);
-  if (user) {
-    const User = await findUserByData(username, password, email);
-    if (User) {
-      res.json({
-        msg: "Seems like you already have an account Try Signining in!",
+  const userExists = await findUserByUsername(username);
+
+  if (userExists) {
+    const user = await findUserByData(username, password, email);
+
+    if (user) {
+      res.status(409).json({
+        msg: "Seems like you already have an account. Try signing in!",
         success: true,
       });
     } else {
-      res.json({
-        msg: `Sorry ${username} with email ${email} is already exists Try a new One!`,
+      res.status(409).json({
+        msg: `Sorry, ${username} with email ${email} already exists. Try a new one!`,
         success: false,
       });
     }
@@ -93,74 +97,64 @@ export const CheckIfUserPresent: Function = async (
   }
 };
 
+// Function to generate a security code
 export const generateSecurityCode = (): string => {
   const code = Math.floor(1000 + Math.random() * 9000);
   return code.toString();
 };
 
-// Function to send an email
+// Function to send an email to a user
 export const sendEmailToUser = async (email: string, username: string) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.EMAIL_SENDER_ADDRESS, //This email also need to be changed
-      pass: process.env.EMAIL_SENDER_PASSWORD, //This password needs to be changed
+      user: process.env.EMAIL_SENDER_ADDRESS,
+      pass: process.env.EMAIL_SENDER_PASSWORD,
     },
   });
 
-  const securityCode = generateSecurityCode(); //This needs to be parsed to Integer
+  const securityCode = generateSecurityCode();
   const mailOptions = {
-    from: "sreecharan309@gmail.com", //noreply.studyspace@gmail.com"
+    from: process.env.EMAIL_SENDER_ADDRESS,
     to: email,
-    subject: `StudySpace - SecurityCode`,
+    subject: "StudySpace - Security Code",
     text: `
-      Hey ${username}
-      Welcome to StudySpace your are just one step away from joining us!
-      Here is your securitycode : ${securityCode}
+      Hey ${username},
+      Welcome to StudySpace! You're just one step away from joining us.
+      Here is your security code: ${securityCode}
     `,
   };
 
   try {
-    const info = await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
     return {
       success: true,
       securityCode,
-      msg: `Security code sent to ${mailOptions.to}`,
+      msg: `Security code sent to ${email}`,
     };
   } catch (error) {
+    console.error("Error sending email:", error);
     return {
       success: false,
-      msg: `Error sending email please try again`,
+      msg: "Error sending email. Please try again.",
     };
   }
 };
 
+// Function to verify the security code
 export const verifySecurityCode = async (
   email: string,
   securitycode: string
 ) => {
-  const getuserByEmail = await Users.findOne({
-    Email: email,
-  });
-
-  const getuserByEmailAndSecurityCode = await Users.findOne({
+  const userByEmail = await Users.findOne({ Email: email });
+  const userByEmailAndCode = await Users.findOne({
     Email: email,
     SecurityCode: securitycode,
   });
 
-  if (getuserByEmail) {
-    if (getuserByEmailAndSecurityCode) {
-      return {
-        success: true,
-      };
-    } else {
-      return {
-        success: false,
-      };
-    }
+  if (userByEmail && userByEmailAndCode) {
+    return { success: true };
   } else {
-    return {
-      success: false,
-    };
+    return { success: false };
   }
 };
