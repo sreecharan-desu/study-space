@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { is_authenticated, user_rollnumber } from "../store/store";
-// import { GET_USERNAME_API } from "../apis/apis";
+import { GET_USERNAME_API } from "../apis/apis";
 
 const Navbar = React.lazy(() => import("./components/Navbar/Navbar"));
 const Spaces = React.lazy(() => import("./components/Spaces/spaces"));
@@ -25,16 +25,13 @@ export default function HomePage() {
       const getUserRollNo = async () => {
         const tokenString = localStorage.getItem("token");
         const token = tokenString ? JSON.parse(tokenString) : null;
-        const res = await fetch(
-          "http://localhost:3000/api/v1/user/getusername",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        const res = await fetch(GET_USERNAME_API, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        });
         const response = await res.json();
         if (response.username == null) {
           localStorage.removeItem("token");

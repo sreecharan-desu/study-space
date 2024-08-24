@@ -32,11 +32,21 @@ export const email_sent = atom({
 });
 
 // Spaces Atoms
-export const spaces = atom({
+
+export type Space = {
+  _id: string;
+  Description: string;
+  Title: string;
+  Subject: string;
+  FromTime: string;
+  ToTime: string;
+  Venue: string;
+};
+
+export const spaces = atom<Space[]>({
   key: "spaces",
   default: [],
 });
-
 // Signup Atoms
 export const signupUsername = atom({
   key: "signupUsername",
@@ -106,7 +116,7 @@ export const space_to_time = atom({
   default: new Date().getHours(),
 });
 
-export const joinedSpaces = atom({
-  key: "JoinedSpaces",
+export const joinedSpaces = atom<string[]>({
+  key: "joinedSpaces",
   default: [],
 });

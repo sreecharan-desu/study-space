@@ -7,6 +7,7 @@ import {
   message_status,
   spaces,
 } from "../../../store/store";
+import { FETCH_SPACES_API, JOIN_SPACE_API } from "../../../apis/apis";
 
 type PropsType = {
   text: string;
@@ -40,7 +41,7 @@ export default function Join_Create_Space({ text, space_id }: PropsType) {
         const bodyData = JSON.stringify({
           space_id,
         });
-        const res = await fetch("http://localhost:3000/api/v1/user/joinspace", {
+        const res = await fetch(JOIN_SPACE_API, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -60,16 +61,13 @@ export default function Join_Create_Space({ text, space_id }: PropsType) {
                 return;
               }
 
-              const res = await fetch(
-                "http://localhost:3000/api/v1/user/getspaces",
-                {
-                  method: "GET",
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + JSON.parse(token),
-                  },
-                }
-              );
+              const res = await fetch(FETCH_SPACES_API, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + JSON.parse(token),
+                },
+              });
 
               if (!res.ok) {
                 throw new Error(`HTTP error! Status: ${res.status}`);

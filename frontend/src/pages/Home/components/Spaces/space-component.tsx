@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import Button from "../Navbar/Button";
 import { joinedSpaces } from "../../../store/store";
+import { JOINED_SPACES_API } from "../../../apis/apis";
 
 type SpaceProps = {
   space_id: string;
@@ -28,23 +29,22 @@ export default function SpaceComp({
   time = "6:45 PM",
   venue = "Seminar hall",
 }: SpaceProps) {
-  const [JoinedSpaces, setJoinedSpaces] = useRecoilState(joinedSpaces);
+  const [JoinedSpaces, setJoinedSpaces] =
+    useRecoilState<string[]>(joinedSpaces);
+
   useEffect(() => {
     const fetchJoinedSpaces = async () => {
       const tokenString = localStorage.getItem("token");
       const token = tokenString ? JSON.parse(tokenString) : null;
 
       try {
-        const response = await fetch(
-          "http://localhost:3000/api/v1/spacesjoined",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(JOINED_SPACES_API, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         const data = await response.json();
 
@@ -61,7 +61,7 @@ export default function SpaceComp({
     fetchJoinedSpaces();
   }, [setJoinedSpaces]);
 
-  const isJoined = JoinedSpaces.includes(space_id);
+  const isJoined: boolean = JoinedSpaces.includes(space_id);
 
   return (
     <div className="flex items-center justify-center" title={space_id}>

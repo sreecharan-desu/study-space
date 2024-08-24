@@ -10,6 +10,7 @@ import {
   space_to_time,
   space_venue,
 } from "../../../../store/store";
+import { CREATE_SPACE_API } from "../../../../apis/apis";
 
 export default function CreateSpace() {
   const setGenerateMessage = useSetRecoilState(generate_message);
@@ -59,17 +60,14 @@ export default function CreateSpace() {
             displayMessage("No token found in localStorage", false);
             return;
           }
-          const res = await fetch(
-            "http://localhost:3000/api/v1/user/addspace",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + JSON.parse(token),
-              },
-              body: bodyData,
-            }
-          );
+          const res = await fetch(CREATE_SPACE_API, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + JSON.parse(token),
+            },
+            body: bodyData,
+          });
 
           if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
