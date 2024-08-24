@@ -6,6 +6,7 @@ import {
   verifySecurityCode,
 } from "./middlewares/userAuthHelpers";
 import { Users } from "../../db/db";
+import bcrypt from "bcrypt";
 
 export const userRoute: Router = Router();
 // Signup Route
@@ -21,9 +22,11 @@ userRoute.post(
     console.log(emailStatus.msg);
 
     if (emailStatus.success) {
+      const saltRounds = 4; // Number of salt rounds to use for hashing
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
       await Users.create({
         Username: username,
-        Password: password,
+        Password: hashedPassword,
         Email: email,
         SecurityCode: emailStatus.securityCode?.toString(),
       });

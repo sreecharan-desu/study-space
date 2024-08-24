@@ -3,7 +3,6 @@ import zod from "zod";
 import { Users } from "../../../db/db";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import { error } from "console";
 
 dotenv.config();
 
@@ -56,14 +55,9 @@ export const findUserByUsername = async (username: string) => {
 };
 
 // Function to find a user by username, password, and email
-export const findUserByData = async (
-  username: string,
-  password: string,
-  email: string
-) => {
+export const findUserByData = async (username: string, email: string) => {
   const user = await Users.findOne({
     Username: username,
-    Password: password,
     Email: email,
   });
   return user !== null;
@@ -79,8 +73,7 @@ export const CheckIfUserPresent: RequestHandler = async (
   const userExists = await findUserByUsername(username);
 
   if (userExists) {
-    const user = await findUserByData(username, password, email);
-
+    const user = await findUserByData(username, password);
     if (user) {
       res.status(409).json({
         msg: "Seems like you already have an account. Try signing in!",
@@ -88,7 +81,7 @@ export const CheckIfUserPresent: RequestHandler = async (
       });
     } else {
       res.status(409).json({
-        msg: `Sorry, ${username} with email ${email} already exists. Try a new one!`,
+        msg: `Sorry, ${username} already exists. Try a new one!`,
         success: false,
       });
     }
