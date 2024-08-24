@@ -4,7 +4,7 @@ import {
   sendEmailToUser,
   userSignupForminputValidation,
   verifySecurityCode,
-} from "./middlewares/user-signup-middlewares&functions";
+} from "./middlewares/userAuthHelpers";
 import { Users } from "../../db/db";
 
 export const userRoute: Router = Router();
