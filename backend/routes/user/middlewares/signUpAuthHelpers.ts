@@ -3,7 +3,6 @@ import zod from "zod";
 import { Users } from "../../../db/db";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-
 dotenv.config();
 
 // Middleware for validating signup form input
@@ -42,7 +41,7 @@ export const userSignupForminputValidation: RequestHandler = (
     });
 
     res.status(400).json({
-      error: errorString,
+      error: errorString.slice(0, -1), // Removing the trailing comma
       success: false,
     });
   }

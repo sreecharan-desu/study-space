@@ -11,11 +11,11 @@ const UserSchema = new mongoose.Schema({
   Username: { type: String, required: true },
   Email: { type: String, required: true, unique: true },
   Password: { type: String, required: true },
-  Spaces: { type: [mongoose.Schema.ObjectId], default: [] }, // Defining the type of elements in the array
+  SpacesCreated: { type: [mongoose.Schema.ObjectId], default: [] }, // Defining the type of elements in the array
+  SpacesJoined: { type: [mongoose.Schema.ObjectId], default: [] }, // Defining the type of elements in the array
   SecurityCode: { type: String, required: true },
 });
 
-// Spaces Schema
 const SpacesSchema = new mongoose.Schema({
   Title: { type: String, default: "Chilling Session", required: true },
   Description: { type: String, default: "Shorter description", required: true },
@@ -29,7 +29,10 @@ const SpacesSchema = new mongoose.Schema({
   Expiry: {
     type: Date,
     default: () => new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-  }, // Default to 1 day later
+  }, // Default to 1 day
+  DateCreatedOn: { type: Date, default: () => new Date() },
+  Creator: { type: mongoose.Schema.ObjectId },
+  Users: { type: [mongoose.Schema.ObjectId], default: [] }, // Defining the type of elements in the array
 });
 
 export const Users = mongoose.model("User", UserSchema);
