@@ -8,6 +8,7 @@ import {
   signinPassword,
 } from "../store/store";
 import { useNavigate } from "react-router";
+import { USER_SIGNIN_API } from "../apis/apis";
 
 export default function SigninButton() {
   const email = useRecoilValue(signinEmail);
@@ -40,7 +41,7 @@ export default function SigninButton() {
           //   setGenerateMessage(true);
           //   return;
           // }
-          const res = await fetch("http://localhost:3000/api/v1/user/signin", {
+          const res = await fetch(USER_SIGNIN_API, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
