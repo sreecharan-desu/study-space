@@ -84,7 +84,7 @@ export const CheckIfUserPresent: Function = async (
       });
     } else {
       res.json({
-        msg: `Sorry ${username} is already taken Try a new One`,
+        msg: `Sorry ${username} with email ${email} is already exists Try a new One!`,
         success: false,
       });
     }
@@ -124,12 +124,43 @@ export const sendEmailToUser = async (email: string, username: string) => {
     const info = await transporter.sendMail(mailOptions);
     return {
       success: true,
+      securityCode,
       msg: `Security code sent to ${mailOptions.to}`,
     };
   } catch (error) {
     return {
       success: false,
       msg: `Error sending email please try again`,
+    };
+  }
+};
+
+export const verifySecurityCode = async (
+  email: string,
+  securitycode: string
+) => {
+  const getuserByEmail = await Users.findOne({
+    Email: email,
+  });
+
+  const getuserByEmailAndSecurityCode = await Users.findOne({
+    Email: email,
+    SecurityCode: securitycode,
+  });
+
+  if (getuserByEmail) {
+    if (getuserByEmailAndSecurityCode) {
+      return {
+        success: true,
+      };
+    } else {
+      return {
+        success: false,
+      };
+    }
+  } else {
+    return {
+      success: false,
     };
   }
 };
