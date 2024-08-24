@@ -36,12 +36,12 @@ export const userSignupForminputValidation: RequestHandler = (
       message: err.message,
     }));
     errors.map((err) => {
-      let errString = err.path + " " + err.message;
+      let errString = err.message;
       errorString += errString + ",";
     });
 
     res.status(400).json({
-      error: errorString.slice(0, -1), // Removing the trailing comma
+      msg: errorString.slice(0, -1), // Removing the trailing comma
       success: false,
     });
   }
