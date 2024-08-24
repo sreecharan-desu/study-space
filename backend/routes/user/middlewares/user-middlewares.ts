@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import zod from "zod";
+import zod, { number } from "zod";
 import { Users } from "../../../db/db";
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const userSignupForminputValidation: Function = (
   req: Request,
@@ -91,28 +93,43 @@ export const CheckIfUserPresent: Function = async (
   }
 };
 
+export const generateSecurityCode = (): string => {
+  const code = Math.floor(1000 + Math.random() * 9000);
+  return code.toString();
+};
+
 // Function to send an email
-export const sendEmailToUser = async (email: string) => {
-  var transporter = nodemailer.createTransport({
+export const sendEmailToUser = async (email: string, username: string) => {
+  const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "sreecharan309@gmail.com",
-      pass: "***REMOVED***",
+      user: process.env.EMAIL_SENDER_ADDRESS, //This email also need to be changed
+      pass: process.env.EMAIL_SENDER_PASSWORD, //This password needs to be changed
     },
   });
 
-  var mailOptions = {
-    from: "sreecharan309@gmail.com",
+  const securityCode = generateSecurityCode(); //This needs to be parsed to Integer
+  const mailOptions = {
+    from: "sreecharan309@gmail.com", //noreply.studyspace@gmail.com"
     to: email,
-    subject: "Sending Email using Node.js",
-    text: "That was easy!",
+    subject: `StudySpace - SecurityCode`,
+    text: `
+      Hey ${username}
+      Welcome to StudySpace your are just one step away from joining us!
+      Here is your securitycode : ${securityCode}
+    `,
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    return {
+      success: true,
+      msg: `Security code sent to ${mailOptions.to}`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      msg: `Error sending email please try again`,
+    };
+  }
 };
