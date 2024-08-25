@@ -78,12 +78,15 @@ export default function Signup() {
                   <Suspense fallback={<div>Loading Username Input...</div>}>
                     <UsernameInput />
                   </Suspense>
+                  <br />
                   <Suspense fallback={<div>Loading Email Input...</div>}>
                     <EmailInput />
                   </Suspense>
+                  <br />
                   <Suspense fallback={<div>Loading Password Input...</div>}>
                     <PasswordInput />
                   </Suspense>
+                  <br />
                   <br />
                   <Suspense fallback={<div>Loading Signup Button...</div>}>
                     <SignupButton />
