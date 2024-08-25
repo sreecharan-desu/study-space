@@ -9,11 +9,18 @@ export default function Footer() {
         </p>
         <p className="text-sm mb-2">
           Made with <span className="text-red-500">&hearts;</span> by Sreecharan
-          along with SreeHari
+          along with{" "}
+          <a
+            href="https://linkedin.com/in/sreehariX"
+            className="underline text-white"
+          >
+            SreeHari
+          </a>
         </p>
         <div className="flex justify-center gap-4">
           <a
             href="https://github.com/sreecharan-desu"
+            target="blank"
             className="text-gray-400 hover:text-white"
           >
             GitHub
@@ -21,6 +28,7 @@ export default function Footer() {
           <SmallDot />
           <a
             href="https://www.linkedin.com/in/sree-charan-desu/"
+            target="blank"
             className="text-gray-400 hover:text-white"
           >
             LinkedIn
@@ -28,6 +36,7 @@ export default function Footer() {
           <SmallDot />
           <a
             href="https://x.com/sreecharandesu"
+            target="blank"
             className="text-gray-400 hover:text-white"
           >
             Twitter 𝕏

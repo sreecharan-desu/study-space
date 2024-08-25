@@ -37,7 +37,11 @@ export default function CreateSpace() {
   const to_time = useRecoilValue(space_to_time);
   const subject = useRecoilValue(space_subject);
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const onclickhandler = async () => {
+    setIsLoading(true);
+
     const createSpace = async () => {
       if (
         title === "" ||
@@ -46,6 +50,7 @@ export default function CreateSpace() {
         subject === ""
       ) {
         alert("Please fill in all the details to create a space!");
+        setIsLoading(false);
       } else {
         try {
           const token = localStorage.getItem("token");
@@ -59,6 +64,7 @@ export default function CreateSpace() {
           });
           if (!token) {
             displayMessage("No token found in localStorage", false);
+            setIsLoading(false);
             return;
           }
           const res = await fetch(CREATE_SPACE_API, {
@@ -81,6 +87,8 @@ export default function CreateSpace() {
           }
         } catch (error) {
           console.error("Error creating spaces:", error);
+        } finally {
+          setIsLoading(false);
         }
       }
     };
@@ -91,15 +99,16 @@ export default function CreateSpace() {
     <>
       <input
         type="button"
-        value={"Create Space"}
+        value={isLoading ? "Creating..." : "Create Space"}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className={`mt-5 w-3/4 cursor-pointer px-6 py-2 border rounded-md transition-all duration-300 ease-in-out ${
           isHovered
             ? "bg-white text-black border-white shadow-md"
             : "bg-black text-white border-black shadow-sm"
-        }`}
+        } ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
         onClick={onclickhandler}
+        disabled={isLoading}
       />
     </>
   );
