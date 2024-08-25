@@ -7,7 +7,7 @@ export const USER_SIGNIN_API =
 export const JOIN_SPACE_API =
   "https://study-space-api.vercel.app/api/v1/user/joinspace";
 export const CREATE_SPACE_API =
-  "https://study-space-api.vercel.app/api/v1/user/createspace";
+  "https://study-space-api.vercel.app/api/v1/user/addspace";
 export const FETCH_SPACES_API =
   "https://study-space-api.vercel.app/api/v1/user/getspaces";
 export const GET_USERNAME_API =
