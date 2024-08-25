@@ -109,8 +109,8 @@ export default function SpaceComp({
             className="flex justify-start md:text-sm"
             style={{ fontSize: "14px" }}
           >
-            {subjectName} &nbsp; <SmallDot /> &nbsp; {author} &nbsp;{" "}
-            <SmallDot /> &nbsp; {memberCount} joined.
+            {subjectName} by &nbsp;<b>{author}</b> &nbsp; <SmallDot /> &nbsp;{" "}
+            {memberCount} joined.
           </span>
           <span
             className="flex justify-start md:text-sm"
