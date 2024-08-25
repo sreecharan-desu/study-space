@@ -2,12 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-
-::-webkit-scrollbar{
-    background-color:transparent;
+::-webkit-scrollbar {
+  background-color: transparent;
 }
 
-::-webkit-scrollbar-thumb{
-    background-color:rgba(128, 128, 128,0.4);
-    border-radius:50px;
+::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.4);
+  border-radius: 50px;
+}
+
+.cabin-condensed-regular {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.cabin-condensed-medium {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.cabin-condensed-semibold {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.cabin-condensed-bold {
+  font-family: "Cabin Condensed", sans-serif;
+  font-weight: 700;
+  font-style: normal;
 }
