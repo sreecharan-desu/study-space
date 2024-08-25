@@ -1,8 +1,4 @@
-// import { useEffect } from "react";
-// import { useRecoilState } from "recoil";
 import Button from "../Navbar/Button";
-// import { joinedSpaces } from "../../../store/store";
-// import { JOINED_SPACES_API } from "../../../apis/apis";
 
 type SpaceProps = {
   space_id: string;
@@ -13,6 +9,8 @@ type SpaceProps = {
   time: string;
   venue: string;
   Joined: boolean;
+  author: string;
+  memberCount: number;
 };
 
 const formattedDate = new Date().toLocaleDateString("en-US", {
@@ -30,6 +28,8 @@ export default function SpaceComp({
   time = "6:45 PM",
   venue = "Seminar hall",
   Joined = false,
+  memberCount = 20,
+  author = "Unknown",
 }: SpaceProps) {
   return (
     <div className="flex items-center justify-center" title={space_id}>
@@ -41,7 +41,8 @@ export default function SpaceComp({
             className="flex justify-start md:text-sm"
             style={{ fontSize: "14px" }}
           >
-            {subjectName}
+            {subjectName} &nbsp; <SmallDot /> &nbsp; {author} &nbsp;{" "}
+            <SmallDot /> &nbsp; {memberCount} joined.
           </span>
           <span
             className="flex justify-start md:text-sm"

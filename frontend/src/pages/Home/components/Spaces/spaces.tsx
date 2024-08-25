@@ -104,6 +104,8 @@ export default function Spaces() {
                     date={fromTimeString.split("T")[0]}
                     venue={space.Venue}
                     Joined={space.Joined}
+                    author={space.Author}
+                    memberCount={space.Users.length}
                   />
                 </Suspense>
               );

@@ -92,6 +92,8 @@ export default function Joinedspaces() {
                     date={fromTimeString.split("T")[0]}
                     venue={space.Venue}
                     Joined={true}
+                    memberCount={space.Users.length}
+                    author={space.Author}
                   />
                 </Suspense>
               );

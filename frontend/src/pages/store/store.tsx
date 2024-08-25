@@ -45,6 +45,7 @@ export interface Space {
   Creator: string;
   Users: string[];
   Joined: boolean;
+  Author: string;
 }
 
 export const spaces = atom<Space[]>({

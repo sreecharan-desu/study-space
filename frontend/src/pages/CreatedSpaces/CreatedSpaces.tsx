@@ -92,6 +92,8 @@ export default function CreatedSpacesPage() {
                     date={fromTimeString.split("T")[0]}
                     venue={space.Venue}
                     Joined={true}
+                    author={space.Author}
+                    memberCount={space.Users.length}
                   />
                 </Suspense>
               );
