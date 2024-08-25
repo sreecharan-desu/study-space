@@ -190,7 +190,7 @@ userRoute.get(
           DateCreatedOn: space.DateCreatedOn || new Date(), // Default to the current date if not provided
           Creator: space.Creator || null, // Default to null if not provided
           Users: space.Users || [], // Default to an empty array if not provided
-          Joined: true, // Joined
+          Joined: false, // Joined
           Author: space.Author,
         }));
 

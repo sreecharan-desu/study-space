@@ -39,6 +39,11 @@ export default function Joinedspaces() {
 
         const data = await res.json();
         console.log(data);
+        if (data.spaces[0] == undefined) {
+          SetSpaces([]); // Update Recoil state with fetched spaces
+          return;
+        }
+
         if (data.spaces) {
           SetSpaces(data.spaces); // Update Recoil state with fetched spaces
         } else {

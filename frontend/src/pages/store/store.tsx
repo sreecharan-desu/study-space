@@ -59,7 +59,7 @@ export const joinedSpaces = atom<Space[]>({
 });
 
 export const CreatedSpaces = atom<Space[]>({
-  key: "joinedspaces",
+  key: "CreatedSpaces",
   default: [],
 });
 
