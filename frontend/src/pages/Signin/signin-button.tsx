@@ -56,8 +56,8 @@ export default function SigninButton() {
             navigateTo("/");
           } else {
             setMessage(result.msg);
-            setMessageStatus(false); // code: red
-            setGenerateMessage(true);
+            setMessageStatus(result.success); // code: red
+            setGenerateMessage(result.success);
           }
         };
         sendData();

@@ -74,7 +74,7 @@ export default function CreateSpace() {
           }
           const data = await res.json();
           if (data.success) {
-            displayMessage("Space created successfully", true);
+            displayMessage(data.msg, data.success);
           }
         } catch (error) {
           console.error("Error creating spaces:", error);

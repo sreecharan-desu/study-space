@@ -159,7 +159,7 @@ userRoute.get(
       const email = await getEmailFromToken(authorization);
       const user_Id = await getUserIdByEmail(email);
       const spaces = await Spaces.find({
-        Users: { $ne: user_Id },
+        Creator: { $ne: user_Id },
       });
 
       res.json({

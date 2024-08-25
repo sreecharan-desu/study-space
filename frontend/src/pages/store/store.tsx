@@ -123,5 +123,10 @@ export const joinedSpaces = atom<string[]>({
 
 export const ButtonStatus = atom<string>({
   key: "ButtonStatus",
-  default: "",
+  default: "Join Spaces",
+});
+
+export const CreatedSpaces = atom<string[]>({
+  key: "CreatedSpaces",
+  default: [],
 });

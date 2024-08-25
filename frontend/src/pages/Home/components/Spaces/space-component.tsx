@@ -12,6 +12,7 @@ type SpaceProps = {
   date: string;
   time: string;
   venue: string;
+  joined: boolean;
 };
 
 const formattedDate = new Date().toLocaleDateString("en-US", {
@@ -28,41 +29,8 @@ export default function SpaceComp({
   date = formattedDate,
   time = "6:45 PM",
   venue = "Seminar hall",
+  joined = false,
 }: SpaceProps) {
-  // const [JoinedSpaces, setJoinedSpaces] =
-  //   useRecoilState<string[]>(joinedSpaces);
-
-  // useEffect(() => {
-  //   const fetchJoinedSpaces = async () => {
-  //     const tokenString = localStorage.getItem("token");
-  //     const token = tokenString ? JSON.parse(tokenString) : null;
-
-  //     try {
-  //       const response = await fetch(JOINED_SPACES_API, {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-
-  //       const data = await response.json();
-
-  //       if (data.success) {
-  //         setJoinedSpaces(data.spaces);
-  //       } else {
-  //         console.error(data.msg);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching joined spaces:", error);
-  //     }
-  //   };
-
-  //   fetchJoinedSpaces();
-  // }, [setJoinedSpaces]);
-
-  // const isJoined: boolean = JoinedSpaces.includes(space_id);
-
   return (
     <div className="flex items-center justify-center" title={space_id}>
       <div className="p-10 bg-white rounded shadow-md w-full">
@@ -83,9 +51,19 @@ export default function SpaceComp({
             {venue}
           </span>
         </p>
-        <div className="mt-4">
-          <Button text={"Join this space Now!"} space_id={space_id} />
-        </div>
+        {joined ? (
+          <>
+            <div className="mt-4">
+              Get ready! Space starts at {time.split("to")[0]}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="mt-4">
+              <Button text={"Join this space Now!"} space_id={space_id} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

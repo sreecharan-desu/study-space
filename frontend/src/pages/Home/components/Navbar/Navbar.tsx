@@ -21,6 +21,16 @@ export default function Navbar() {
           {authenticated ? (
             <Suspense fallback="Loading...">
               <Heading text={"Hello, " + rollNumber} />
+              <button
+                className="bg-black text-white font-semibold py-2 px-6 rounded-full shadow-md hover:bg-red-700 transition duration-300 ease-in-out ml-10"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  window.location.href = "/";
+                  // Handle logout logic here
+                }}
+              >
+                Logout
+              </button>{" "}
             </Suspense>
           ) : (
             <Suspense fallback="Loading...">
