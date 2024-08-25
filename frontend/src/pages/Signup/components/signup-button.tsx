@@ -35,10 +35,10 @@ export default function SignupButton() {
   };
 
   const sendDataToBackend = async () => {
-    // if (!email.includes("@iitb.ac.in")) {
-    //   displayMessage("We are currently available in only IITB!", false);
-    //   return;
-    // }
+    if (!email.includes("@iitb.ac.in")) {
+      displayMessage("We are currently available in only IITB!", false);
+      return;
+    }
     if (!email.includes("@")) {
       displayMessage(
         "Invalid email address. Please enter a valid email.",
