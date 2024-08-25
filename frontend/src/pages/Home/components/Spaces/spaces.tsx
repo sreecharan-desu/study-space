@@ -77,31 +77,43 @@ export default function Spaces() {
           </div>
         ) : Spacess.length > 0 ? (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-2">
-            {Spacess.map((space) => (
-              <Suspense key={space._id} fallback={<div>Loading Space...</div>}>
-                <SpaceComp
-                  space_id={space._id}
-                  description={space.Description}
-                  heading={space.Title}
-                  subjectName={space.Subject}
-                  time={`${space.FromTime.split("T")[1].split(".")[0]} to ${
-                    space.ToTime.split("T")[1].split(".")[0]
-                  }`}
-                  date={space.FromTime.split("T")[0]}
-                  venue={space.Venue}
-                />
-              </Suspense>
-            ))}
+            {Spacess.map((space) => {
+              // Convert Date objects to strings if necessary
+              const fromTimeString =
+                typeof space.FromTime === "string"
+                  ? space.FromTime
+                  : space.FromTime.toISOString();
+              const toTimeString =
+                typeof space.ToTime === "string"
+                  ? space.ToTime
+                  : space.ToTime.toISOString();
+
+              return (
+                <Suspense
+                  key={space._id}
+                  fallback={<div>Loading Space...</div>}
+                >
+                  <SpaceComp
+                    space_id={space._id}
+                    description={space.Description}
+                    heading={space.Title}
+                    subjectName={space.Subject}
+                    time={`${fromTimeString.split("T")[1].split(".")[0]} to ${
+                      toTimeString.split("T")[1].split(".")[0]
+                    }`}
+                    date={fromTimeString.split("T")[0]}
+                    venue={space.Venue}
+                    Joined={space.Joined}
+                  />
+                </Suspense>
+              );
+            })}
           </div>
         ) : (
-          <>
-            <div className="ml-10">
-              {/* <Heading text="/JoinSpaces" /> */}
-              <br />
-              There are no new spaces available. Go to Joined spaces to see the
-              spaces you joined
-            </div>
-          </>
+          <div className="ml-10">
+            There are no new spaces available. Go to Joined spaces to see the
+            spaces you joined.
+          </div>
         )}
       </div>
     </>

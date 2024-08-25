@@ -12,7 +12,7 @@ type SpaceProps = {
   date: string;
   time: string;
   venue: string;
-  joined: boolean;
+  Joined: boolean;
 };
 
 const formattedDate = new Date().toLocaleDateString("en-US", {
@@ -29,7 +29,7 @@ export default function SpaceComp({
   date = formattedDate,
   time = "6:45 PM",
   venue = "Seminar hall",
-  joined = false,
+  Joined = false,
 }: SpaceProps) {
   return (
     <div className="flex items-center justify-center" title={space_id}>
@@ -51,7 +51,7 @@ export default function SpaceComp({
             {venue}
           </span>
         </p>
-        {joined ? (
+        {Joined ? (
           <>
             <div className="mt-4">
               Get ready! Space starts at {time.split("to")[0]}

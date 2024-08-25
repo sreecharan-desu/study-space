@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import SpaceComp from "../Home/components/Spaces/space-component";
 import { useRecoilState } from "recoil";
-import { joinedSpaces } from "../store/store";
+import { joinedSpaces, Space } from "../store/store";
 import { JOINED_SPACES_API } from "../apis/apis";
 
 const Heading = React.lazy(
@@ -11,7 +11,8 @@ const Navbar = React.lazy(() => import("../Home/components/Navbar/Navbar"));
 const Topbar = React.lazy(() => import("../Home/components/Topbar/Topbar"));
 
 export default function Joinedspaces() {
-  const [Spaces, SetSpaces] = useRecoilState(joinedSpaces); // Recoil state with setter
+  const [Spaces, SetSpaces] = useRecoilState<Space[]>(joinedSpaces); // Type the state
+  const [error, setError] = React.useState<string | null>(null);
 
   useEffect(() => {
     const getSpaces = async () => {
@@ -43,11 +44,12 @@ export default function Joinedspaces() {
         }
       } catch (error) {
         console.error("Error fetching spaces:", error);
+        setError("Error fetching spaces. Please try again later.");
       }
     };
 
     getSpaces();
-  }, []); // Empty dependency array to run only once on component mount
+  }, [SetSpaces]); // Added SetSpaces to dependency array for completeness
 
   return (
     <>
@@ -55,31 +57,45 @@ export default function Joinedspaces() {
       <Topbar />
       <div className="m-10">
         <Suspense fallback={<div>Loading Heading...</div>}>
-          <Heading text={"/Joined Spaces" + `(${Spaces.length})`} />
+          <Heading text={`/Joined Spaces (${Spaces.length})`} />
         </Suspense>
       </div>
       <div className="m-10">
-        {Spaces.length > 0 ? (
+        {error ? (
+          <div className="bg-red-100 text-red-700 p-4 rounded-md">{error}</div>
+        ) : Spaces.length > 0 ? (
           <div className="grid grid-cols-1 justify-center md:grid-cols-3 lg:grid-cols-2 gap-4">
-            {Spaces.map((space) => (
-              <Suspense
-                key={space._id}
-                fallback={<div>Loading Space Component...</div>}
-              >
-                <SpaceComp
-                  space_id={space._id}
-                  description={space.Description}
-                  heading={space.Title}
-                  subjectName={space.Subject}
-                  time={`${space.FromTime.split("T")[1].split(".")[0]} to ${
-                    space.ToTime.split("T")[1].split(".")[0]
-                  }`}
-                  date={space.FromTime.split("T")[0]}
-                  venue={space.Venue}
-                  joined={true}
-                />
-              </Suspense>
-            ))}
+            {Spaces.map((space) => {
+              // Convert Date objects to strings if necessary
+              const fromTimeString =
+                typeof space.FromTime === "string"
+                  ? space.FromTime
+                  : space.FromTime.toISOString();
+              const toTimeString =
+                typeof space.ToTime === "string"
+                  ? space.ToTime
+                  : space.ToTime.toISOString();
+
+              return (
+                <Suspense
+                  key={space._id}
+                  fallback={<div>Loading Space Component...</div>}
+                >
+                  <SpaceComp
+                    space_id={space._id}
+                    description={space.Description}
+                    heading={space.Title}
+                    subjectName={space.Subject}
+                    time={`${fromTimeString.split("T")[1].split(".")[0]} to ${
+                      toTimeString.split("T")[1].split(".")[0]
+                    }`}
+                    date={fromTimeString.split("T")[0]}
+                    venue={space.Venue}
+                    Joined={true}
+                  />
+                </Suspense>
+              );
+            })}
           </div>
         ) : (
           <div>No joined spaces available.</div>
