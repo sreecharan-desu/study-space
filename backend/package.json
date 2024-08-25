@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -b",
-    "build:clean": "npm run build"
+    "build:clean": "npm run build",
+    "clean": "rimraf dist/**/*.js"
+
   },
   "repository": {
     "type": "git",
@@ -35,6 +37,7 @@
     "@types/node": "^22.5.0",
     "@types/node-schedule": "^2.1.7",
     "@types/nodemailer": "^6.4.15",
+    "rimraf": "^6.0.1",
     "typescript": "^5.5.4"
   }
 }

@@ -33,6 +33,7 @@ const SpacesSchema = new mongoose.Schema({
   DateCreatedOn: { type: Date, default: () => new Date() },
   Creator: { type: mongoose.Schema.ObjectId },
   Users: { type: [mongoose.Schema.ObjectId], default: [] }, // Defining the type of elements in the array
+  Author: String,
 });
 
 export const Users = mongoose.model("User", UserSchema);

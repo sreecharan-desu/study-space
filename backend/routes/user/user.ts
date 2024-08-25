@@ -20,6 +20,7 @@ import {
   getUserIdByEmail,
   getUsernameByEmail,
 } from "./middlewares/authMiddleware";
+import { throwDeprecation, title } from "process";
 
 export const userRoute: Router = Router();
 
@@ -158,12 +159,37 @@ userRoute.get(
     try {
       const email = await getEmailFromToken(authorization);
       const user_Id = await getUserIdByEmail(email);
+
+      const user = await Users.findOne({
+        _id: user_Id,
+      });
+
       const spaces = await Spaces.find({
         Creator: { $ne: user_Id },
       });
 
+      const updatedSpaces = spaces
+        .filter((space) => user?.SpacesJoined.includes(space._id)) // Filter out spaces that are not included in user.SpacesJoined
+        .map(async (space) => ({
+          _id: space._id,
+          Title: space.Title || "Default Title", // Include a default value if necessary
+          Description: space.Description || "Shorter description", // Default value if not provided
+          Venue: space.Venue || "Seminar hall", // Default value if not provided
+          Subject: space.Subject || "General", // Default value if not provided
+          FromTime: space.FromTime || new Date(), // Default to the current date if not provided
+          ToTime: space.ToTime || new Date(new Date().getTime() + 60 * 60000), // Default to 60 minutes later if not provided
+          Expiry:
+            space.Expiry ||
+            new Date(new Date().getTime() + 24 * 60 * 60 * 1000), // Default to 1 day later if not provided
+          DateCreatedOn: space.DateCreatedOn || new Date(), // Default to the current date if not provided
+          Creator: space.Creator || null, // Default to null if not provided
+          Users: space.Users || [], // Default to an empty array if not provided
+          Joined: true,
+          Author: space.Author,
+        }));
+
       res.json({
-        spaces,
+        spaces: updatedSpaces,
         success: true,
       });
     } catch (error) {
@@ -228,6 +254,14 @@ userRoute.post(
         });
       }
 
+      const author_name = await Users.findOne({
+        _id: user_Id,
+      });
+
+      if (!author_name) {
+        throw new Error("Fatal : No User found");
+      }
+
       const space = await Spaces.create({
         Title: title,
         Description: description,
@@ -237,6 +271,7 @@ userRoute.post(
         ToTime: toTime,
         Creator: user_Id,
         Users: [],
+        Author: author_name.Username,
       });
 
       // Update the user with the created space
