@@ -54,9 +54,9 @@ export default function SigninButton() {
           body: JSON.stringify(data),
         });
         const result = await res.json();
-        localStorage.setItem("token", JSON.stringify(result.token));
-        localStorage.removeItem("email");
         if (result.success) {
+          localStorage.setItem("token", JSON.stringify(result.token));
+          localStorage.removeItem("email");
           setIsAuthenticated(true);
           navigateTo("/");
         } else {

@@ -20,6 +20,8 @@ export default function HomePage() {
     const token = tokenString ? JSON.parse(tokenString) : null;
     if (token) {
       setIsAuthenticated(true);
+    } else if (token == undefined) {
+      setIsAuthenticated(false);
     }
     if (isAuthenticated) {
       const getUserRollNo = async () => {
