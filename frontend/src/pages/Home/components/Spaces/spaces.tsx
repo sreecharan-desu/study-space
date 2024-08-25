@@ -40,7 +40,6 @@ export default function Spaces() {
         }
 
         const data = await res.json();
-        console.log(data);
         if (Array.isArray(data.spaces)) {
           setSpaces(data.spaces); // Ensure data.spaces is of type Space[]
         } else {

@@ -37,8 +37,8 @@ export default function Joinedspaces() {
         }
 
         const data = await res.json();
-        if (Array.isArray(data.spaceDetails)) {
-          SetSpaces(data.spaceDetails); // Update Recoil state with fetched spaces
+        if (Array.isArray(data.spaces)) {
+          SetSpaces(data.spaces); // Update Recoil state with fetched spaces
         } else {
           throw new Error("Unexpected response format");
         }

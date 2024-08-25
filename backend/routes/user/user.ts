@@ -174,21 +174,31 @@ userRoute.get(
             !user?.SpacesCreated.includes(space._id) && // User has not created this space
             space.Creator !== user?._id // User is not the creator of this space
         )
-        .map((space) => [
-          space._id,
-          space.Title || "Default Title", // Include a default value if necessary
-          space.Description || "Shorter description", // Default value if not provided
-          space.Venue || "Seminar hall", // Default value if not provided
-          space.Subject || "General", // Default value if not provided
-          space.FromTime || new Date(), // Default to the current date if not provided
-          space.ToTime || new Date(new Date().getTime() + 60 * 60000), // Default to 60 minutes later if not provided
-          space.Expiry || new Date(new Date().getTime() + 24 * 60 * 60 * 1000), // Default to 1 day later if not provided
-          space.DateCreatedOn || new Date(), // Default to the current date if not provided
-          space.Creator || null, // Default to null if not provided
-          space.Users || [], // Default to an empty array if not provided
-          true, // Joined
-          space.Author,
-        ]);
+        .map((space) => ({
+          _id: space._id,
+          Title: space.Title || "Default Title", // Include a default value if necessary
+          Description: space.Description || "Shorter description", // Default value if not provided
+          Venue: space.Venue || "Seminar hall", // Default value if not provided
+          Subject: space.Subject || "General", // Default value if not provided
+          FromTime: space.FromTime || new Date(), // Default to the current date if not provided
+          ToTime: space.ToTime || new Date(new Date().getTime() + 60 * 60000), // Default to 60 minutes later if not provided
+          Expiry:
+            space.Expiry ||
+            new Date(new Date().getTime() + 24 * 60 * 60 * 1000), // Default to 1 day later if not provided
+          DateCreatedOn: space.DateCreatedOn || new Date(), // Default to the current date if not provided
+          Creator: space.Creator || null, // Default to null if not provided
+          Users: space.Users || [], // Default to an empty array if not provided
+          Joined: true, // Joined
+          Author: space.Author,
+        }));
+
+      // Assuming `data.spaces` contains the result
+      const data = await res.json();
+      if (Array.isArray(data.spaces)) {
+        SetSpaces(data.spaces); // Update Recoil state with fetched spaces
+      } else {
+        throw new Error("Unexpected response format");
+      }
 
       res.json({
         spaces: updatedSpaces,
