@@ -67,14 +67,12 @@ export default function CreatedSpacesPage() {
         ) : Spaces.length > 0 ? (
           <div className="grid grid-cols-1 justify-center md:grid-cols-3 lg:grid-cols-2 gap-4">
             {Spaces.map((space) => {
-              const fromTimeString =
-                typeof space.FromTime === "string"
-                  ? space.FromTime
-                  : new Date(space.FromTime).toISOString();
-              const toTimeString =
-                typeof space.ToTime === "string"
-                  ? space.ToTime
-                  : new Date(space.ToTime).toISOString();
+              const fromTime = new Date(space.FromTime);
+              const toTime = new Date(space.ToTime);
+              const currentTime = new Date();
+
+              // Check if the space has ended
+              const isEnded = currentTime > toTime;
 
               return (
                 <Suspense
@@ -84,12 +82,10 @@ export default function CreatedSpacesPage() {
                   <SpaceComp
                     space_id={space._id}
                     description={space.Description}
-                    heading={space.Title}
+                    heading={isEnded ? `${space.Title} (Ended)` : space.Title} // Append (Ended) if the space has ended
                     subjectName={space.Subject}
-                    time={`${fromTimeString.split("T")[1].split(".")[0]} to ${
-                      toTimeString.split("T")[1].split(".")[0]
-                    }`}
-                    date={fromTimeString.split("T")[0]}
+                    time={`${fromTime.toLocaleTimeString()} to ${toTime.toLocaleTimeString()}`}
+                    date={fromTime.toLocaleDateString()}
                     venue={space.Venue}
                     Joined={true}
                     author={space.Author}

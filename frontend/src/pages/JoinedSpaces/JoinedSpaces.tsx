@@ -31,21 +31,13 @@ export default function Joinedspaces() {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        console.log(res);
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
-
         const data = await res.json();
         console.log(data);
-        if (data.spaces[0] == undefined) {
-          SetSpaces([]); // Update Recoil state with fetched spaces
-          return;
-        }
-
-        if (data.spaces) {
-          SetSpaces(data.spaces); // Update Recoil state with fetched spaces
+        if (data.spaceDetails) {
+          SetSpaces(data.spaceDetails); // Update Recoil state with fetched spaces
         } else {
           throw new Error("Unexpected response format");
         }

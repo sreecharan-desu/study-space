@@ -174,7 +174,8 @@ userRoute.get(
         .filter(
           (space) =>
             !user?.SpacesCreated.includes(space._id) && // User has not created this space
-            space.Creator !== user?._id // User is not the creator of this space
+            space.Creator !== user?._id && // User is not the creator of this space
+            !user?.SpacesJoined.includes(space._id)
         )
         .map((space) => ({
           _id: space._id,
