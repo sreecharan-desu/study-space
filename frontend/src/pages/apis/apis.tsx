@@ -16,3 +16,5 @@ export const JOINED_SPACES_API =
   "https://study-space-api.vercel.app/api/v1/user/spacesjoined";
 export const CREATED_SPACES_API =
   "https://study-space-api.vercel.app/api/v1/user/spacescreated";
+export const NO_AUTH_GET_SPACES_API =
+  "https://study-space-api.vercel.app/api/v1/user/noauthgetspaces";

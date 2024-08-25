@@ -1,7 +1,7 @@
-import React, { Suspense, useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { spaces, Space } from "../../../store/store";
-import { FETCH_SPACES_API } from "../../../apis/apis";
+import React, { Suspense, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { spaces, Space, is_authenticated } from "../../../store/store";
+import { FETCH_SPACES_API, NO_AUTH_GET_SPACES_API } from "../../../apis/apis";
 import TopBar from "../Topbar/Topbar";
 
 const SpaceComp = React.lazy(() => import("./space-component"));
@@ -9,7 +9,9 @@ const SpaceComp = React.lazy(() => import("./space-component"));
 export default function Spaces() {
   const [Spacess, setSpaces] = useRecoilState<Space[]>(spaces);
   const [error, setError] = useState<string | null>(null);
-  useEffect(() => {
+  const isAuth = useRecoilValue(is_authenticated);
+
+  if (isAuth) {
     const getSpaces = async () => {
       try {
         const tokenString = localStorage.getItem("token");
@@ -42,9 +44,34 @@ export default function Spaces() {
         setError("Error fetching spaces. Please try again later.");
       }
     };
-
     getSpaces();
-  }, [setSpaces]);
+  } else {
+    const getSpaces = async () => {
+      try {
+        const res = await fetch(NO_AUTH_GET_SPACES_API, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        if (Array.isArray(data.spaces)) {
+          setSpaces(data.spaces); // Ensure data.spaces is of type Space[]
+        } else {
+          throw new Error("Unexpected response format");
+        }
+      } catch (error) {
+        console.error("Error fetching spaces:", error);
+        setError("Error fetching spaces. Please try again later.");
+      }
+    };
+    getSpaces();
+  }
 
   return (
     <>
