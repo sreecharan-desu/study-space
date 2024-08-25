@@ -1,10 +1,10 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { generate_message, message, message_status } from "../store/store";
 import { useState, useEffect } from "react";
 
 export default function WarningMessage() {
   const messageBackground = useRecoilValue(message_status); // true/false
-  const [messageVisibility, setVisibiliy] = useRecoilState(generate_message); // true/false
+  const messageVisibility = useRecoilValue(generate_message); // true/false
   const messageValue = useRecoilValue(message); // message content
   const [visible, setVisible] = useState(false);
 
@@ -13,7 +13,6 @@ export default function WarningMessage() {
       setVisible(true);
       const timer = setTimeout(() => {
         setVisible(false);
-        setVisibiliy(false);
       }, 2000); // Duration the message will be visible
 
       return () => clearTimeout(timer); // Cleanup on unmount or when messageVisibility changes
