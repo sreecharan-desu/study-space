@@ -164,9 +164,9 @@ userRoute.get(
         _id: user_Id,
       });
 
-      const spaces = await Spaces.find({
-        Creator: { $ne: user_Id },
-      });
+      // const spaces = await Spaces.find({
+      //   Creator: { $ne: user_Id },
+      // });
 
       const updatedSpaces = spaces
         .filter(
