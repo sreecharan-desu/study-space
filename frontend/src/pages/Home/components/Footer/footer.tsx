@@ -8,14 +8,14 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} StudySpace. All rights reserved.
         </p>
         <p className="text-sm mb-2">
-          Made with <span className="text-red-500">&hearts;</span> by
+          Made with <span className="text-red-500">&hearts;</span> by &nbsp;
           <a
             href="https://www.linkedin.com/in/sree-charan-desu/"
             className="underline text-white"
           >
             Sreecharan
           </a>
-          along with{" "}
+          &nbsp; along with{" "}
           <a
             href="https://linkedin.com/in/sreehariX"
             className="underline text-white"
