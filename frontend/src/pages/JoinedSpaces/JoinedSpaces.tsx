@@ -35,7 +35,6 @@ export default function Joinedspaces() {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
         const data = await res.json();
-        console.log(data);
         if (data.spaceDetails) {
           SetSpaces(data.spaceDetails); // Update Recoil state with fetched spaces
         } else {

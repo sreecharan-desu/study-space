@@ -48,10 +48,8 @@ export default function VerifyOTP() {
         setCount(0);
       } else {
         const emailString = localStorage.getItem("email");
-        console.log(emailString);
         const email = emailString ? JSON.parse(emailString) : null;
         const data = { email, securitycode: OTP };
-        console.log(JSON.stringify(data));
 
         const res = await fetch(VERIFY_OTP_API, {
           method: "POST",

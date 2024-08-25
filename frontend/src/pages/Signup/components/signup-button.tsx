@@ -48,7 +48,6 @@ export default function SignupButton() {
       displayMessage("Processing your signup request...", true);
       try {
         const data = { username, email, password };
-        console.log(data);
         const response = await fetch(USER_SIGNUP_API, {
           method: "POST",
           headers: {
@@ -57,7 +56,6 @@ export default function SignupButton() {
           body: JSON.stringify(data),
         });
         const result = await response.json();
-        console.log(result);
         if (result.success) {
           localStorage.setItem("email", JSON.stringify(email));
           displayMessage(result.msg, result.success);
