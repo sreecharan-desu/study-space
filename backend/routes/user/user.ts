@@ -168,6 +168,8 @@ userRoute.get(
       //   Creator: { $ne: user_Id },
       // });
 
+      const spaces = await Spaces.find();
+
       const updatedSpaces = spaces
         .filter(
           (space) =>
