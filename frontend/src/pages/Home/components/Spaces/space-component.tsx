@@ -126,7 +126,7 @@ export default function SpaceComp({
   );
 }
 
-function SmallDot() {
+export function SmallDot() {
   return (
     <div className="text-sm" style={{ fontSize: "4px" }}>
       ⚫
