@@ -9,11 +9,16 @@
 - **Event Invitations**: Invite others to your study space via personalized invites. Share details such as the venue, time, and subject matter.
 - **Local Notifications**: Get reminders for upcoming study sessions and never miss an opportunity to learn or teach.
 
-## 🛠️ Technologies Used
+## Technologies Used 🚀
 
-- **Frontend**: React,TypeScript,Tailwind CSS
-- **Backend**: Express,mongoose,JWT for auth
-- **Hosting**: Vercel
+- **React**: A JavaScript library for building user interfaces.
+- **Recoil**: For state management.
+- **Tailwind CSS**: A utility-first CSS framework for styling.
+- **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+- **Fetch API**: For making HTTP requests.
+- **React Suspense**: For handling lazy-loaded components.
+- **Async/Await**: For managing asynchronous operations.
+- **Hosting** : Vercel
 
 ## 🚀 Getting Started
 
