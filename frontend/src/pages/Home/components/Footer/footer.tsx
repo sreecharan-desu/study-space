@@ -9,6 +9,7 @@ export default function Footer() {
         </p>
         <p className="text-sm mb-2">
           Made with <span className="text-red-500">&hearts;</span> by Sreecharan
+          along with SreeHari
         </p>
         <div className="flex justify-center gap-4">
           <a
