@@ -16,9 +16,6 @@ export default function Hostspaces() {
         <Heading text="/Host a Space" />
       </div>
       <Host />
-      <br />
-      <br />
-      <br />
     </>
   );
 }

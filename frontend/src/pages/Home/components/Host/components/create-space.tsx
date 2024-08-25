@@ -11,6 +11,7 @@ import {
   space_venue,
 } from "../../../../store/store";
 import { CREATE_SPACE_API } from "../../../../apis/apis";
+import { useState } from "react";
 
 export default function CreateSpace() {
   const setGenerateMessage = useSetRecoilState(generate_message);
@@ -35,7 +36,7 @@ export default function CreateSpace() {
   const from_time = useRecoilValue(space_from_time);
   const to_time = useRecoilValue(space_to_time);
   const subject = useRecoilValue(space_subject);
-
+  const [isHovered, setIsHovered] = useState(false);
   const onclickhandler = async () => {
     const createSpace = async () => {
       if (
@@ -91,8 +92,13 @@ export default function CreateSpace() {
       <input
         type="button"
         value={"Create Space"}
-        className="px-4 py-2 bg-white text-black font-bold hover:bg-black hover:text-white"
-        style={{ border: "2px solid black" }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={`mt-5 w-3/4 cursor-pointer px-6 py-2 border rounded-md transition-all duration-300 ease-in-out ${
+          isHovered
+            ? "bg-black text-white border-black shadow-md"
+            : "bg-white text-black border-gray-300 shadow-sm"
+        }`}
         onClick={onclickhandler}
       />
     </>

@@ -9,6 +9,7 @@ import {
 } from "../store/store";
 import { useNavigate } from "react-router";
 import { USER_SIGNIN_API } from "../apis/apis";
+import { useState } from "react";
 
 export default function SigninButton() {
   const email = useRecoilValue(signinEmail);
@@ -18,7 +19,7 @@ export default function SigninButton() {
   const setGenerateMessage = useSetRecoilState(generate_message);
   const setMessage = useSetRecoilState(message);
   const setMessageStatus = useSetRecoilState(message_status);
-
+  const [isHovered, setIsHovered] = useState(false);
   const signinUser = () => {
     if (!email.includes("@")) {
       setMessage("Enter a valid email address");
@@ -79,8 +80,13 @@ export default function SigninButton() {
       <input
         type="button"
         value="Signin"
-        className="px-6 py-2 rounded-md font-bold hover:bg-black hover:text-white cursor-pointer"
-        style={{ border: "2px solid black" }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className={`mt-5 w-3/4 cursor-pointer px-6 py-2 border rounded-md transition-all duration-300 ease-in-out ${
+          isHovered
+            ? "bg-black text-white border-black shadow-md"
+            : "bg-white text-black border-gray-300 shadow-sm"
+        }`}
         onClick={signinUser}
       />
     </>
