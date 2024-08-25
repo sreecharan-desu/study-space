@@ -78,16 +78,6 @@ export default function Spaces() {
         ) : Spacess.length > 0 ? (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-2">
             {Spacess.map((space) => {
-              // Convert Date objects to strings if necessary
-              const fromTimeString =
-                typeof space.FromTime === "string"
-                  ? space.FromTime
-                  : space.FromTime.toISOString();
-              const toTimeString =
-                typeof space.ToTime === "string"
-                  ? space.ToTime
-                  : space.ToTime.toISOString();
-
               return (
                 <Suspense
                   key={space._id}
@@ -98,10 +88,8 @@ export default function Spaces() {
                     description={space.Description}
                     heading={space.Title}
                     subjectName={space.Subject}
-                    time={`${fromTimeString.split("T")[1].split(".")[0]} to ${
-                      toTimeString.split("T")[1].split(".")[0]
-                    }`}
-                    date={fromTimeString.split("T")[0]}
+                    time={space.FromTime + "to" + space.ToTime}
+                    date={space.DateCreatedOn} // Use the formatted date from `fromTime`
                     venue={space.Venue}
                     Joined={space.Joined}
                     author={space.Author}

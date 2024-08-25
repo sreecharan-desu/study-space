@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from "react";
-import SpaceComp from "../Home/components/Spaces/space-component";
+import SpaceComp from "../Home/components/Spaces/space-component"; // Ensure correct path and capitalization
 import { useRecoilState } from "recoil";
 import { CreatedSpaces as createdSpacesAtom, Space } from "../store/store";
 import { CREATED_SPACES_API } from "../apis/apis";
@@ -8,11 +8,10 @@ const Topbar = React.lazy(() => import("../Home/components/Topbar/Topbar"));
 const Navbar = React.lazy(() => import("../Home/components/Navbar/Navbar"));
 const Heading = React.lazy(
   () => import("../Home/components/Navbar/navbar-heading")
-);
+); // Ensure correct path and capitalization
 
 export default function CreatedSpacesPage() {
-  // Renamed component
-  const [Spaces, setSpaces] = useRecoilState<Space[]>(createdSpacesAtom); // Renamed import
+  const [Spaces, setSpaces] = useRecoilState<Space[]>(createdSpacesAtom);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -39,7 +38,7 @@ export default function CreatedSpacesPage() {
 
         const data = await res.json();
         if (Array.isArray(data.spaceDetails)) {
-          setSpaces(data.spaceDetails as Space[]); // Ensure data is cast to Space[]
+          setSpaces(data.spaceDetails as Space[]);
         } else {
           throw new Error("Unexpected response format");
         }
@@ -50,7 +49,18 @@ export default function CreatedSpacesPage() {
     };
 
     getSpaces();
-  }, [setSpaces]); // Dependency array includes setSpaces
+  }, [setSpaces]);
+
+  // Function to format date and time for IST time zone
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-IN", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
 
   return (
     <>
@@ -67,12 +77,15 @@ export default function CreatedSpacesPage() {
         ) : Spaces.length > 0 ? (
           <div className="grid grid-cols-1 justify-center md:grid-cols-3 lg:grid-cols-2 gap-4">
             {Spaces.map((space) => {
-              const fromTime = new Date(space.FromTime);
-              const toTime = new Date(space.ToTime);
-              const currentTime = new Date();
+              if (!space) {
+                // Skip if space is null or undefined
+                return null;
+              }
 
-              // Check if the space has ended
-              const isEnded = currentTime > toTime;
+              const fromTime = space.FromTime ? new Date(space.FromTime) : null;
+              const toTime = space.ToTime ? new Date(space.ToTime) : null;
+              const currentTime = new Date();
+              const isEnded = toTime ? currentTime > toTime : false;
 
               return (
                 <Suspense
@@ -80,16 +93,32 @@ export default function CreatedSpacesPage() {
                   fallback={<div>Loading Space Component...</div>}
                 >
                   <SpaceComp
-                    space_id={space._id}
-                    description={space.Description}
-                    heading={isEnded ? `${space.Title} (Ended)` : space.Title} // Append (Ended) if the space has ended
-                    subjectName={space.Subject}
-                    time={`${fromTime.toLocaleTimeString()} to ${toTime.toLocaleTimeString()}`}
-                    date={fromTime.toLocaleDateString()}
-                    venue={space.Venue}
+                    space_id={space._id || "Unknown ID"}
+                    description={
+                      space.Description || "No description available"
+                    }
+                    heading={
+                      isEnded
+                        ? `${space.Title} (Ended)`
+                        : space.Title || "No Title"
+                    }
+                    subjectName={space.Subject || "Unknown Subject"}
+                    time={`${
+                      fromTime
+                        ? fromTime.toISOString().split("T")[1].split(".")[0]
+                        : "N/A"
+                    } to ${
+                      toTime
+                        ? toTime.toISOString().split("T")[1].split(".")[0]
+                        : "N/A"
+                    }`}
+                    date={formatDate(
+                      fromTime ? fromTime.toISOString().split("T")[0] : ""
+                    )}
+                    venue={space.Venue || "Unknown Venue"}
                     Joined={true}
-                    author={space.Author}
-                    memberCount={space.Users.length}
+                    author={space.Author || "Unknown Author"}
+                    memberCount={space.Users ? space.Users.length : 0}
                   />
                 </Suspense>
               );

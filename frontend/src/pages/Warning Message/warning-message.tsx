@@ -22,7 +22,7 @@ export default function WarningMessage() {
 
   return (
     <div
-      className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-300 ${
+      className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-300 ${
         visible ? "opacity-100" : "opacity-0"
       } opacity-0`}
       style={{ pointerEvents: "none" }} // Prevent interaction during transition
