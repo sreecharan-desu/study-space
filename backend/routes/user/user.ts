@@ -192,13 +192,13 @@ userRoute.get(
           Author: space.Author,
         }));
 
-      // Assuming `data.spaces` contains the result
-      const data = await res.json();
-      if (Array.isArray(data.spaces)) {
-        SetSpaces(data.spaces); // Update Recoil state with fetched spaces
-      } else {
-        throw new Error("Unexpected response format");
-      }
+      // // Assuming `data.spaces` contains the result
+      // const data = await res.json();
+      // if (Array.isArray(data.spaces)) {
+      //   SetSpaces(data.spaces); // Update Recoil state with fetched spaces
+      // } else {
+      //   throw new Error("Unexpected response format");
+      // }
 
       res.json({
         spaces: updatedSpaces,

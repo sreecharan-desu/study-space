@@ -32,12 +32,14 @@ export default function Joinedspaces() {
           },
         });
 
+        console.log(res);
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
         }
 
         const data = await res.json();
-        if (Array.isArray(data.spaces)) {
+        console.log(data);
+        if (data.spaces) {
           SetSpaces(data.spaces); // Update Recoil state with fetched spaces
         } else {
           throw new Error("Unexpected response format");
