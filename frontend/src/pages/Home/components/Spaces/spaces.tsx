@@ -40,8 +40,9 @@ export default function Spaces() {
         }
 
         const data = await res.json();
-        if (Array.isArray(data.spaces)) {
-          setSpaces(data.spaces); // Ensure data.spaces is of type Space[]
+        console.log(data);
+        if (Array.isArray(data.spaces.spaces)) {
+          setSpaces(data.spaces.spaces); // Ensure data.spaces is of type Space[]
         } else {
           throw new Error("Unexpected response format");
         }
