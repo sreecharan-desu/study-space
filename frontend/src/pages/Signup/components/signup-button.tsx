@@ -9,6 +9,7 @@ import {
   signupUsername,
 } from "../../store/store";
 import { USER_SIGNUP_API } from "../../apis/apis";
+import { useState } from "react";
 
 export default function SignupButton() {
   const username = useRecoilValue(signupUsername);
@@ -19,6 +20,7 @@ export default function SignupButton() {
   const setMessage = useSetRecoilState(message);
   const setMessageStatus = useSetRecoilState(message_status);
   const setEmailSent = useSetRecoilState(email_sent);
+  const [isHovered, setIsHovered] = useState(false);
 
   const displayMessage = (msg: string, isSuccess: boolean) => {
     setMessage(msg);
@@ -76,8 +78,13 @@ export default function SignupButton() {
     <input
       type="button"
       value="Signup"
-      className="p-2 m-2 rounded-md hover:bg-black hover:text-white cursor-pointer font-bold"
-      style={{ border: "2px solid black" }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`mt-5 w-3/4 cursor-pointer px-6 py-2 border rounded-md transition-all duration-300 ease-in-out ${
+        isHovered
+          ? "bg-black text-white border-black shadow-md"
+          : "bg-white text-black border-gray-300 shadow-sm"
+      }`}
       onClick={sendDataToBackend}
     />
   );

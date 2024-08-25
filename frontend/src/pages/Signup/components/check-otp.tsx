@@ -10,6 +10,7 @@ import {
 } from "../../store/store";
 import { useNavigate } from "react-router";
 import { VERIFY_OTP_API } from "../../apis/apis";
+import { useState } from "react";
 
 export default function VerifyOTP() {
   const setGenerateMessage = useSetRecoilState(generate_message);
@@ -17,7 +18,7 @@ export default function VerifyOTP() {
   const setMessageStatus = useSetRecoilState(message_status);
   const setEmailSent = useSetRecoilState(email_sent);
   const navigateTo = useNavigate();
-
+  const [isHovered, setIsHovered] = useState(false);
   const displayMessage = (message: string, code: boolean) => {
     setMessage(message);
     setMessageStatus(code); // code:red
@@ -82,8 +83,13 @@ export default function VerifyOTP() {
     <input
       type="button"
       value="Verify OTP"
-      className="p-2 m-2 rounded-md"
-      style={{ border: "2px solid black" }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`mt-5 w-3/4 cursor-pointer px-6 py-2 border rounded-md transition-all duration-300 ease-in-out ${
+        isHovered
+          ? "bg-black text-white border-black shadow-md"
+          : "bg-white text-black border-gray-300 shadow-sm"
+      }`}
       onClick={sendDataToBackend}
     />
   );

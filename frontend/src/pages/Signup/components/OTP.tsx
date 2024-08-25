@@ -1,8 +1,10 @@
 import { useSetRecoilState } from "recoil";
 import { otp } from "../../store/store";
+import { useState } from "react";
 
 export default function OTPInput() {
   const setOTP = useSetRecoilState(otp);
+  const [isFocused, setIsFocused] = useState(false);
   const OTPHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOTP(event.target.value);
   };
@@ -11,8 +13,13 @@ export default function OTPInput() {
     <input
       type="text" // Changed to text for OTP input
       placeholder="Enter OTP"
-      className="p-2 m-2 rounded-md hover:bg-black hover:text-white cursor-pointer font-bold"
-      style={{ border: "2px solid black" }}
+      className={`w-full p-3 border rounded-md transition-shadow duration-300 ease-in-out ${
+        isFocused
+          ? "border-black shadow-md ring-2 ring-black"
+          : "border-gray-300 shadow-sm"
+      }`}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
       onChange={OTPHandler}
     />
   );
