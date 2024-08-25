@@ -13,7 +13,7 @@ export default function UsernameInput() {
     <input
       type="text"
       placeholder="John Doe"
-      className={`w-full p-3 border rounded-md transition-shadow duration-300 ease-in-out ${
+      className={`w-full p-3 mb-3 border rounded-md transition-shadow duration-300 ease-in-out ${
         isFocused
           ? "border-black shadow-md ring-2 ring-black"
           : "border-gray-300 shadow-sm"

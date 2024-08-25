@@ -71,7 +71,7 @@ export const fetchUser: RequestHandler = async (
     const { email, password } = req.body;
     const emailFound = await fetchDbByEmail(email);
     if (!emailFound) {
-      return res.status(404).json({
+      return res.json({
         msg: "Seems like you don't have an account. Go signup now!",
         success: false,
       });

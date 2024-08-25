@@ -52,14 +52,15 @@ export default function SigninButton() {
           const result = await res.json();
           localStorage.setItem("token", JSON.stringify(result.token));
           localStorage.removeItem("email");
+          console.log(result);
           if (result.success) {
             setIsAuthenticated(true);
             navigateTo("/");
-          } else {
-            setMessage(result.msg);
-            setMessageStatus(result.success); // code: red
-            setGenerateMessage(result.success);
           }
+          console.log(result.success);
+          setMessage("Check your password and Try Again");
+          setMessageStatus(result.success); // code: red
+          setGenerateMessage(result.success);
         };
         sendData();
       } catch (e) {
