@@ -1,25 +1,39 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { generate_message, message, message_status } from "../store/store";
+import { useState, useEffect } from "react";
 
 export default function WarningMessage() {
-    const messageBackground = useRecoilValue(message_status);
-    const messageVisibility = useRecoilValue(generate_message);
-    const messageValue = useRecoilValue(message);
+  const [messageBackground, setMessagebackground] =
+    useRecoilState(message_status);
+  const messageVisibility = useRecoilValue(generate_message);
+  const messageValue = useRecoilValue(message);
+  const [visible, setVisible] = useState(false);
 
-    if (!messageVisibility) {
-        return null;
+  useEffect(() => {
+    if (messageVisibility) {
+      setVisible(true);
+      const timer = setTimeout(() => {
+        setVisible(false);
+        setMessagebackground(false);
+      }, 3000); // Duration the message will be visible
+
+      return () => clearTimeout(timer); // Cleanup on unmount or when messageVisibility changes
     }
-    return (
-        <div className="flex justify-center">
-            {messageBackground ? (
-                <div className="lex bg-green-500 rounded-md p-5 text-sm md:text-lg md:font-bold md:m-10 md:w-1/2 md:justify-center">
-                    {messageValue}
-                </div>
-            ) : (
-                <div className="flex bg-red-500 rounded-md p-5 text-sm md:text-lg md:font-bold md:m-10 md:w-1/2 md:justify-center">
-                    {messageValue}
-                </div>
-            )}
-        </div>
-    );
+  }, [messageVisibility]);
+
+  return (
+    <div
+      className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-300 ${
+        visible ? "opacity-100" : "opacity-0"
+      }`}
+    >
+      <div
+        className={`${
+          messageBackground ? "bg-green-500" : "bg-red-500"
+        } rounded-md p-5 text-white text-sm md:text-lg md:font-bold`}
+      >
+        {messageValue}
+      </div>
+    </div>
+  );
 }

@@ -2,13 +2,13 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { spaces, Space } from "../../../store/store";
 import { FETCH_SPACES_API } from "../../../apis/apis";
+import TopBar from "../Topbar/Topbar";
 
 const SpaceComp = React.lazy(() => import("./space-component"));
 
 export default function Spaces() {
   const [Spacess, setSpaces] = useRecoilState<Space[]>(spaces);
   const [error, setError] = useState<string | null>(null);
-
   useEffect(() => {
     const getSpaces = async () => {
       try {
@@ -47,35 +47,45 @@ export default function Spaces() {
   }, [setSpaces]);
 
   return (
-    <div className="m-10 font-bold text-2xl first-letter:text-4xl md:m-20 md:text-4xl md:first-letter:text-6xl">
-      Welcome to StudySpace!
-      {error ? (
-        <div className="flex bg-white text-2xl font-bold justify-center text-center">
-          {error}
-        </div>
-      ) : Spacess.length > 0 ? (
-        <div className="grid grid-cols-1 justify-center md:grid-cols-3 lg:grid-cols-2">
-          {Spacess.map((space) => (
-            <Suspense key={space._id} fallback="Loading...">
-              <SpaceComp
-                space_id={space._id}
-                description={space.Description}
-                heading={space.Title}
-                subjectName={space.Subject}
-                time={`${space.FromTime.split("T")[1].split(".")[0]} to ${
-                  space.ToTime.split("T")[1].split(".")[0]
-                }`}
-                date={space.FromTime.split("T")[0]}
-                venue={space.Venue}
-              />
-            </Suspense>
-          ))}
-        </div>
+    <>
+      {localStorage.getItem("token") ? (
+        <>
+          <TopBar />
+        </>
       ) : (
-        <div className="flex bg-white text-2xl font-bold justify-center text-center">
-          There aren't any spaces yet. Be the first to create one now!
+        <div className="m-10 font-bold text-2xl text-center first-letter:text-4xl md:m-20 md:text-4xl md:first-letter:text-6xl">
+          Welcome to StudySpace!
         </div>
       )}
-    </div>
+      <div>
+        {error ? (
+          <div className="flex bg-white text-2xl font-bold justify-center text-center">
+            {error}
+          </div>
+        ) : Spacess.length > 0 ? (
+          <div className="grid grid-cols-1 justify-center md:grid-cols-3 lg:grid-cols-2">
+            {Spacess.map((space) => (
+              <Suspense key={space._id} fallback="Loading...">
+                <SpaceComp
+                  space_id={space._id}
+                  description={space.Description}
+                  heading={space.Title}
+                  subjectName={space.Subject}
+                  time={`${space.FromTime.split("T")[1].split(".")[0]} to ${
+                    space.ToTime.split("T")[1].split(".")[0]
+                  }`}
+                  date={space.FromTime.split("T")[0]}
+                  venue={space.Venue}
+                />
+              </Suspense>
+            ))}
+          </div>
+        ) : (
+          <div className="flex bg-white text-2xl font-bold justify-center text-center">
+            There aren't any spaces yet. Be the first to create one now!
+          </div>
+        )}
+      </div>
+    </>
   );
 }

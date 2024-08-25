@@ -173,6 +173,19 @@ userRoute.get(
   }
 );
 
+userRoute.get("/noauthgetspaces", async (req: Request, res: Response) => {
+  try {
+    const spaces = await Spaces.find();
+    res.json({
+      spaces,
+      success: true,
+    });
+  } catch (error) {
+    console.error("Error getting spaces:", error);
+    res.status(500).json({ msg: "Internal server error", success: false });
+  }
+});
+
 userRoute.post(
   "/addspace",
   authMiddleware,

@@ -18,7 +18,7 @@ export const generate_message = atom({
 
 export const message_status = atom({
   key: "message_status",
-  default: true,
+  default: false,
 });
 
 export const message = atom({
@@ -119,4 +119,9 @@ export const space_to_time = atom({
 export const joinedSpaces = atom<string[]>({
   key: "joinedSpaces",
   default: [],
+});
+
+export const ButtonStatus = atom<string>({
+  key: "ButtonStatus",
+  default: "",
 });
