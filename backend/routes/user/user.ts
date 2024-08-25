@@ -169,7 +169,7 @@ userRoute.get(
       });
 
       const updatedSpaces = spaces
-        .filter((space) => user?.SpacesCreated.includes(space._id)) // Filter out spaces that are not included in user.SpacesJoined
+        .filter((space) => !user?.SpacesCreated.includes(space._id)) // Filter out spaces that are not included in user.SpacesJoined
         .map(async (space) => ({
           _id: space._id,
           Title: space.Title || "Default Title", // Include a default value if necessary
