@@ -8,7 +8,8 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} StudySpace. All rights reserved.
         </p>
         <p className="text-sm mb-2">
-          Made with <span className="text-red-500">&hearts;</span> by &nbsp;
+          Made with <span className="text-red-500">&hearts;</span> by
+          &nbsp;&nbsp;
           <a
             href="https://www.linkedin.com/in/sree-charan-desu/"
             className="underline text-white"
