@@ -88,7 +88,11 @@ export default function Spaces() {
                     description={space.Description}
                     heading={space.Title}
                     subjectName={space.Subject}
-                    time={space.FromTime + "to" + space.ToTime}
+                    time={
+                      space.FromTime.toString().split("T")[1].split(".")[0] +
+                      " to " +
+                      space.ToTime.toString().split("T")[1].split(".")[0]
+                    }
                     date={space.DateCreatedOn} // Use the formatted date from `fromTime`
                     venue={space.Venue}
                     Joined={space.Joined}

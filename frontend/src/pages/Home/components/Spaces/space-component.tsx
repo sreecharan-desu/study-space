@@ -76,6 +76,14 @@ export default function SpaceComp({
           <div>{`Space has ended. It was held from ${time}.`}</div>
         </div>
       );
+    } else {
+      return (
+        <>
+          <div className="mt-5 -ml-2">
+            <Button text={"Join this space Now!"} space_id={space_id} />;
+          </div>
+        </>
+      );
     }
   };
 
