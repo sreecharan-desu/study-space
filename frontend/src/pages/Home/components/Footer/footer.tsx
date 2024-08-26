@@ -16,7 +16,7 @@ export default function Footer() {
           >
             Sreecharan
           </a>
-          &nbsp; along with{" "}
+          &nbsp; along with
           <a
             href="https://linkedin.com/in/sreehariX"
             className="underline text-white"
