@@ -39,22 +39,22 @@ const SpacesSchema = new mongoose.Schema({
 export const Users = mongoose.model("User", UserSchema);
 export const Spaces = mongoose.model("Space", SpacesSchema);
 
-// Scheduling a job to run daily at midnight to remove expired spaces
-schedule.scheduleJob("0 0 * * *", async function () {
-  const now = new Date();
-  try {
-    const result = await Spaces.deleteMany({ Expiry: { $lt: now } });
-    console.log(`Removed ${result.deletedCount} expired spaces.`);
-  } catch (error) {
-    console.error("Error removing expired spaces:", error);
-    try {
-      console.log(`Error removing spaces first time retrying the process...`);
-      const result = await Spaces.deleteMany({ Expiry: { $lt: now } });
-      console.log(`Removed ${result.deletedCount} expired spaces.`);
-    } catch (e) {
-      console.log(
-        `Error removing spaces second time and stopping the process...`
-      );
-    }
-  }
-});
+// // Scheduling a job to run daily at midnight to remove expired spaces
+// schedule.scheduleJob("0 0 * * *", async function () {
+//   const now = new Date();
+//   try {
+//     const result = await Spaces.deleteMany({ Expiry: { $lt: now } });
+//     console.log(`Removed ${result.deletedCount} expired spaces.`);
+//   } catch (error) {
+//     console.error("Error removing expired spaces:", error);
+//     try {
+//       console.log(`Error removing spaces first time retrying the process...`);
+//       const result = await Spaces.deleteMany({ Expiry: { $lt: now } });
+//       console.log(`Removed ${result.deletedCount} expired spaces.`);
+//     } catch (e) {
+//       console.log(
+//         `Error removing spaces second time and stopping the process...`
+//       );
+//     }
+//   }
+// });
