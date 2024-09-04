@@ -38,7 +38,12 @@ export default function CreatedSpacesPage() {
 
         const data = await res.json();
         if (Array.isArray(data.spaceDetails)) {
-          setSpaces(data.spaceDetails as Space[]);
+          const spacesRecieved = data.spaceDetails;
+          const filteredSpaces = spacesRecieved.filter(
+            (space: Space) => space != null
+          );
+          console.log(filteredSpaces);
+          setSpaces(filteredSpaces as Space[]);
         } else {
           throw new Error("Unexpected response format");
         }
@@ -47,7 +52,6 @@ export default function CreatedSpacesPage() {
         setError("Error fetching spaces. Please try again later.");
       }
     };
-
     getSpaces();
   }, [setSpaces]);
 
