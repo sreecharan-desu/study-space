@@ -11,7 +11,7 @@ export default function Footer() {
           Made with <span className="text-red-500">&hearts;</span> by
           &nbsp;&nbsp;
           <a
-            href="https://www.linkedin.com/in/sree-charan-desu/"
+            href="https://www.linkedin.com/in/sreecharan-desu/"
             className="underline text-white"
           >
             Sreecharan
@@ -34,7 +34,7 @@ export default function Footer() {
           </a>
           <SmallDot />
           <a
-            href="www.linkedin.com/in/sreecharan-desu/"
+            href="https://www.linkedin.com/in/sreecharan-desu/"
             target="blank"
             className="text-gray-400 hover:text-white"
           >
