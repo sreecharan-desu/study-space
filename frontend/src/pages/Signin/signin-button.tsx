@@ -40,12 +40,12 @@ export default function SigninButton() {
     try {
       const sendData = async () => {
         const data = { email, password };
-        // if (!email.includes("@iitb.ac.in")) {
-        //   setMessage("We are currently available in only IITB!");
-        //   setMessageStatus(false); // code: red
-        //   setGenerateMessage(true);
-        //   return;
-        // }
+        if (!email.includes("@iitb.ac.in")) {
+          setMessage("We are currently available in only IITB!");
+          setMessageStatus(false); // code: red
+          setGenerateMessage(true);
+          return;
+        }
         const res = await fetch(USER_SIGNIN_API, {
           method: "POST",
           headers: {

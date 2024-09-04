@@ -68,13 +68,26 @@ export default function Spaces() {
   };
 
   const invalidSpacescount = validateSpaces();
-  if (invalidSpacescount >= spacesCount) {
+  if (invalidSpacescount >= spacesCount && localStorage.getItem("token")) {
     return (
       <>
+        <TopBar />
         <div className="ml-10 mt-10">
           There are no new spaces available. Go to Joined spaces to see the
           spaces you joined.
         </div>
+      </>
+    );
+  } else if (
+    invalidSpacescount >= spacesCount &&
+    !localStorage.getItem("token")
+  ) {
+    return (
+      <>
+        <div className="ml-10 mt-10">
+          There are no new spaces available.Create a Space Now!.
+        </div>
+        ;
       </>
     );
   } else {
