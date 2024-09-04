@@ -164,44 +164,37 @@ userRoute.get(
         _id: user_Id,
       });
 
-      // const spaces = await Spaces.find({
-      //   Creator: { $ne: user_Id },
-      // });
-
       const spaces = await Spaces.find();
 
+      // Filter out expired spaces and those the user has created or joined
       const updatedSpaces = spaces
-        .filter(
-          (space) =>
+        .filter((space) => {
+          const currentTime = new Date();
+          const spaceExpiryTime = new Date(space.Expiry);
+          return (
+            currentTime <= spaceExpiryTime && // Only include spaces that have not expired
             !user?.SpacesCreated.includes(space._id) && // User has not created this space
             space.Creator !== user?._id && // User is not the creator of this space
-            !user?.SpacesJoined.includes(space._id)
-        )
+            !user?.SpacesJoined.includes(space._id) // User has not joined this space
+          );
+        })
         .map((space) => ({
           _id: space._id,
-          Title: space.Title || "Default Title", // Include a default value if necessary
-          Description: space.Description || "Shorter description", // Default value if not provided
-          Venue: space.Venue || "Seminar hall", // Default value if not provided
-          Subject: space.Subject || "General", // Default value if not provided
-          FromTime: space.FromTime || new Date(), // Default to the current date if not provided
-          ToTime: space.ToTime || new Date(new Date().getTime() + 60 * 60000), // Default to 60 minutes later if not provided
+          Title: space.Title || "Default Title",
+          Description: space.Description || "Shorter description",
+          Venue: space.Venue || "Seminar hall",
+          Subject: space.Subject || "General",
+          FromTime: space.FromTime || new Date(),
+          ToTime: space.ToTime || new Date(new Date().getTime() + 60 * 60000),
           Expiry:
             space.Expiry ||
-            new Date(new Date().getTime() + 24 * 60 * 60 * 1000), // Default to 1 day later if not provided
-          DateCreatedOn: space.DateCreatedOn || new Date(), // Default to the current date if not provided
-          Creator: space.Creator || null, // Default to null if not provided
-          Users: space.Users || [], // Default to an empty array if not provided
-          Joined: false, // Joined
+            new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+          DateCreatedOn: space.DateCreatedOn || new Date(),
+          Creator: space.Creator || null,
+          Users: space.Users || [],
+          Joined: false,
           Author: space.Author,
         }));
-
-      // // Assuming `data.spaces` contains the result
-      // const data = await res.json();
-      // if (Array.isArray(data.spaces)) {
-      //   SetSpaces(data.spaces); // Update Recoil state with fetched spaces
-      // } else {
-      //   throw new Error("Unexpected response format");
-      // }
 
       res.json({
         spaces: updatedSpaces,
@@ -217,8 +210,21 @@ userRoute.get(
 userRoute.get("/noauthgetspaces", async (req: Request, res: Response) => {
   try {
     const spaces = await Spaces.find();
+
+    // Get current time in UTC
+    const currentTimeUTC = new Date();
+
+    // Filter out expired spaces
+    const validSpaces = spaces.filter((space) => {
+      // Convert space expiry time to UTC Date object
+      const spaceExpiryTimeUTC = new Date(space.Expiry);
+
+      // Compare current UTC time with space expiry time
+      return currentTimeUTC <= spaceExpiryTimeUTC;
+    });
+
     res.json({
-      spaces,
+      spaces: validSpaces,
       success: true,
     });
   } catch (error) {
@@ -226,6 +232,7 @@ userRoute.get("/noauthgetspaces", async (req: Request, res: Response) => {
     res.status(500).json({ msg: "Internal server error", success: false });
   }
 });
+
 
 userRoute.post(
   "/addspace",
