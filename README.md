@@ -42,7 +42,6 @@
   npm run dev
   ```
 
-
 Open your browser and visit http://localhost:5173.
 
 🛡️ Security
