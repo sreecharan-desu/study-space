@@ -101,7 +101,7 @@ export default function Spaces() {
 
             <div className="m-10">
               <Suspense fallback={<div>Loading Heading...</div>}>
-                <Heading text="/Today's saces" />
+                <Heading text="/Today's Spaces" />
               </Suspense>
             </div>
           </>
