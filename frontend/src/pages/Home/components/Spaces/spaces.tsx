@@ -54,62 +54,97 @@ export default function Spaces() {
     fetchSpaces();
   }, [isAuth, setSpaces]); // Dependency array to refetch if authentication state changes
 
-  return (
-    <>
-      {localStorage.getItem("token") ? (
-        <TopBar />
-      ) : (
-        <>
-          <div className="m-10 font-bold text-2xl text-center first-letter:text-4xl md:m-20 md:text-4xl md:first-letter:text-6xl">
-            Welcome to StudySpace!
-          </div>
-          <div className="m-10">
-            <Suspense fallback={<div>Loading Heading...</div>}>
-              <Heading text="/Join Spaces" />
-            </Suspense>
-          </div>
-        </>
-      )}
-      <div>
-        {error ? (
-          <div className="flex bg-white text-2xl font-bold justify-center text-center p-4">
-            {error}
-          </div>
-        ) : Spacess.length > 0 ? (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-2">
-            {Spacess.map((space) => {
-              return (
-                <Suspense
-                  key={space._id}
-                  fallback={<div>Loading Space...</div>}
-                >
-                  <SpaceComp
-                    space_id={space._id}
-                    description={space.Description}
-                    heading={space.Title}
-                    subjectName={space.Subject}
-                    time={
-                      space.FromTime.toString().split("T")[1].split(".")[0] +
-                      " to " +
-                      space.ToTime.toString().split("T")[1].split(".")[0]
-                    }
-                    date={space.DateCreatedOn} // Use the formatted date from `fromTime`
-                    venue={space.Venue}
-                    Joined={space.Joined}
-                    author={space.Author}
-                    memberCount={space.Users.length}
-                  />
-                </Suspense>
-              );
-            })}
-          </div>
+  const spacesCount = Spacess.length;
+  const validateSpaces = () => {
+    let invalidSpacesCount = 0;
+    Spacess.map((space) => {
+      const currentTime = new Date();
+      const spaceEndTime = new Date(space.ToTime);
+      if (currentTime > spaceEndTime) {
+        invalidSpacesCount++;
+      }
+    });
+    return invalidSpacesCount;
+  };
+
+  const invalidSpacescount = validateSpaces();
+  if (invalidSpacescount >= spacesCount) {
+    return (
+      <>
+        <div className="ml-10 mt-10">
+          There are no new spaces available. Go to Joined spaces to see the
+          spaces you joined.
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        {localStorage.getItem("token") ? (
+          <TopBar />
         ) : (
-          <div className="ml-10">
-            There are no new spaces available. Go to Joined spaces to see the
-            spaces you joined.
-          </div>
+          <>
+            <div className="m-10 font-bold text-2xl text-center first-letter:text-4xl md:m-20 md:text-4xl md:first-letter:text-6xl">
+              Welcome to StudySpace!
+            </div>
+            <div className="m-10">
+              <Suspense fallback={<div>Loading Heading...</div>}>
+                <Heading text="/Join Spaces" />
+              </Suspense>
+            </div>
+          </>
         )}
-      </div>
-    </>
-  );
+        <div>
+          {error ? (
+            <div className="flex bg-white text-2xl font-bold justify-center text-center p-4">
+              {error}
+            </div>
+          ) : Spacess.length > 0 ? (
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-2">
+              {Spacess.map((space) => {
+                const currentTime = new Date();
+                const spaceEndTime = new Date(space.ToTime);
+                const isEnded = currentTime > spaceEndTime;
+                if (isEnded) {
+                  return <></>;
+                } else {
+                  return (
+                    <Suspense
+                      key={space._id}
+                      fallback={<div>Loading Space...</div>}>
+                      <SpaceComp
+                        space_id={space._id}
+                        description={space.Description}
+                        heading={space.Title}
+                        subjectName={space.Subject}
+                        time={
+                          space.FromTime.toString()
+                            .split("T")[1]
+                            .split(".")[0] +
+                          " to " +
+                          space.ToTime.toString().split("T")[1].split(".")[0]
+                        }
+                        date={space.DateCreatedOn} // Use the formatted date from `fromTime`
+                        venue={space.Venue}
+                        Joined={space.Joined}
+                        author={space.Author}
+                        memberCount={space.Users.length}
+                      />
+                    </Suspense>
+                  );
+                }
+              })}
+            </div>
+          ) : (
+            <div className="ml-10">
+              There are no new spaces available. Go to Joined spaces to see the
+              spaces you joined.
+            </div>
+          )}
+        </div>
+      </>
+    );
+  }
+
+ 
 }
