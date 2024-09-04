@@ -96,7 +96,15 @@ export default function Spaces() {
     return (
       <>
         {localStorage.getItem("token") ? (
-          <TopBar />
+          <>
+            <TopBar />
+
+            <div className="m-10">
+              <Suspense fallback={<div>Loading Heading...</div>}>
+                <Heading text="/Today's saces" />
+              </Suspense>
+            </div>
+          </>
         ) : (
           <>
             <div className="m-10 font-bold text-2xl text-center first-letter:text-4xl md:m-20 md:text-4xl md:first-letter:text-6xl">
@@ -104,7 +112,7 @@ export default function Spaces() {
             </div>
             <div className="m-10">
               <Suspense fallback={<div>Loading Heading...</div>}>
-                <Heading text="/Join Spaces" />
+                <Heading text="/Today's Spaces" />
               </Suspense>
             </div>
           </>
