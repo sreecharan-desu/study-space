@@ -34,7 +34,7 @@ export default function Footer() {
           </a>
           <SmallDot />
           <a
-            href="https://www.linkedin.com/in/sree-charan-desu/"
+            href="www.linkedin.com/in/sreecharan-desu/"
             target="blank"
             className="text-gray-400 hover:text-white"
           >
