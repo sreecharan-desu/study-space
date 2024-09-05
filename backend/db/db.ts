@@ -40,25 +40,26 @@ const SpacesSchema = new mongoose.Schema({
 
 export const Users = mongoose.model("User", UserSchema);
 export const Spaces = mongoose.model("Space", SpacesSchema);
-
-// Scheduling a job to run every minute to check and mark expired spaces
+// Scheduling a job to run every minute to check and mark expired spaces based on ToTime
 schedule.scheduleJob("* * * * *", async function () {
   const now = new Date();
   try {
     const result = await Spaces.updateMany(
-      { Expiry: { $lt: now } },
-      { isExpired: true }
+      { ToTime: { $lt: now } }, // Check spaces whose ToTime has passed
+      { isExpired: true } // Set isExpired to true for those spaces
     );
-    console.log("Expired spaces updated:", result);
+    console.log("Expired spaces updated based on ToTime:", result);
   } catch (error) {
-    console.error("Error updating expired spaces:", error);
+    console.error("Error updating expired spaces based on ToTime:", error);
     try {
-      console.log("Retrying the process to update expired spaces...");
+      console.log(
+        "Retrying the process to update expired spaces based on ToTime..."
+      );
       const result = await Spaces.updateMany(
-        { Expiry: { $lt: now } },
+        { ToTime: { $lt: now } }, // Retry the same condition
         { isExpired: true }
       );
-      console.log("Expired spaces updated on retry:", result);
+      console.log("Expired spaces updated on retry based on ToTime:", result);
     } catch (e) {
       console.log(
         "Failed to update expired spaces on retry. Stopping process..."

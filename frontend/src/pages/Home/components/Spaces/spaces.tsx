@@ -54,7 +54,8 @@ export default function Spaces() {
         setError("Error fetching spaces. Please try again later.");
       }
     };
-    setInterval(() => fetchSpaces(), 1000);
+    fetchSpaces();
+    setInterval(() => fetchSpaces(), 60 * 1000);
   }, [isAuth, setSpaces]);
 
   const validateSpaces = () => {
