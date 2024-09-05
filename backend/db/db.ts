@@ -37,18 +37,48 @@ const SpacesSchema = new mongoose.Schema({
   isExpired: { type: Boolean, default: false }, // Changed to Mongoose Boolean type
 });
 
+
 export const Users = mongoose.model("User", UserSchema);
 export const Spaces = mongoose.model("Space", SpacesSchema);
-// Scheduling a job to run every minute to check and mark expired spaces based on ToTime
-schedule.scheduleJob("* * * * *", async function () {
-  const now = new Date();
-  try {
-    const result = await Spaces.updateMany(
-      { ToTime: { $lt: now } }, // Check spaces whose ToTime has passed
-      { isExpired: true } // Set isExpired to true for those spaces
-    );
-    console.log("Expired spaces updated based on ToTime:", result);
-  } catch (error) {
-    console.error("Error updating expired spaces based on ToTime:", error);
-  }
-});
+
+const filterSpaces = async () => {
+  const spaces = await Spaces.find();
+  const nowYear = new Date().getUTCFullYear();
+  const nowMonth = new Date().getMonth();
+  const nowDate = new Date().getDate();
+  const nowHours = new Date().getHours();
+  const nowMinutes = new Date().getMinutes();
+  const nowSeconds = new Date().getSeconds();
+  let expiredSpacesCount = 0;
+  spaces.map(async (space) => {
+    const spaceToTimeYear = new Date(space.ToTime).getUTCFullYear();
+    const spaceToTimeMonth = new Date(space.ToTime).getMonth();
+    const spaceToTimeDate = new Date(space.ToTime).getDate();
+    const spaceToTimeHours = new Date(space.ToTime).getHours();
+    const spaceToTimeMinutes = new Date(space.ToTime).getMinutes();
+    const spaceToTimeSeconds = new Date(space.ToTime).getSeconds();
+    if (
+      nowYear > spaceToTimeYear ||
+      nowMonth > spaceToTimeMonth ||
+      nowDate > spaceToTimeDate ||
+      nowHours > spaceToTimeHours ||
+      nowMinutes > spaceToTimeMinutes ||
+      nowSeconds > spaceToTimeSeconds
+    ) {
+      if (!space.isExpired) {
+        expiredSpacesCount++;
+        await Spaces.updateOne(
+          {
+            _id: space._id,
+          },
+          {
+            isExpired: true,
+          }
+        );
+      }
+    }
+  });
+  console.log(`${expiredSpacesCount} spaces expired...`);
+};
+
+schedule.scheduleJob("* * * * *", filterSpaces);
