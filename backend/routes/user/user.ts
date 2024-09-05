@@ -194,6 +194,7 @@ userRoute.get(
           Users: space.Users || [],
           Joined: false,
           Author: space.Author,
+          isExpired: space.isExpired,
         }));
 
       res.json({
