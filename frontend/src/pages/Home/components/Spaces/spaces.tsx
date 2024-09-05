@@ -45,7 +45,7 @@ export default function Spaces() {
           const filteredSpaces = data.spaces.filter((space: Space) => {
             if (!space.isExpired) return space;
           });
-          setSpaces(filteredSpaces); // Set filtered spaces in Recoil state
+          setSpaces(filteredSpaces.reverse()); // Set filtered spaces in Recoil state
         } else {
           throw new Error("Unexpected response format");
         }
