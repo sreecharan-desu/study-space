@@ -11,7 +11,6 @@ export default function Spaces() {
   const [Spacess, setSpaces] = useRecoilState<Space[]>(spaces);
   const [error, setError] = useState<string | null>(null);
   const isAuth = useRecoilValue(is_authenticated);
-  const [validSpaces, setValidSpaces] = useState<Space[]>([]);
 
   useEffect(() => {
     const fetchSpaces = async () => {
@@ -43,13 +42,10 @@ export default function Spaces() {
         const data = await res.json();
         if (Array.isArray(data.spaces)) {
           // Filter out expired spaces
-          const currentTime = new Date();
           const filteredSpaces = data.spaces.filter((space: Space) => {
-            const spaceExpiryTime = new Date(space.Expiry);
-            return currentTime <= spaceExpiryTime;
+            if (!space.isExpired) return space;
           });
           setSpaces(filteredSpaces); // Set filtered spaces in Recoil state
-          setValidSpaces(filteredSpaces); // Also set valid spaces in local state
         } else {
           throw new Error("Unexpected response format");
         }
@@ -58,8 +54,7 @@ export default function Spaces() {
         setError("Error fetching spaces. Please try again later.");
       }
     };
-
-    fetchSpaces();
+    setInterval(() => fetchSpaces(), 1000);
   }, [isAuth, setSpaces]);
 
   const validateSpaces = () => {
@@ -84,7 +79,10 @@ export default function Spaces() {
         </div>
       </>
     );
-  } else if (invalidSpacesCount >= spacesCount && !localStorage.getItem("token")) {
+  } else if (
+    invalidSpacesCount >= spacesCount &&
+    !localStorage.getItem("token")
+  ) {
     return (
       <>
         <div className="ml-10 mt-10">
@@ -122,9 +120,9 @@ export default function Spaces() {
             <div className="flex bg-white text-2xl font-bold justify-center text-center p-4">
               {error}
             </div>
-          ) : validSpaces.length > 0 ? (
+          ) : Spacess.length > 0 ? (
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-2">
-              {validSpaces.map((space) => (
+              {Spacess.map((space) => (
                 <Suspense
                   key={space._id}
                   fallback={<div>Loading Space...</div>}>
