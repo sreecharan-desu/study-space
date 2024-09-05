@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import schedule from "node-schedule";
 import dotenv from "dotenv";
+import { boolean } from "zod";
 dotenv.config();
 
 const mongoUri: string = process.env.MONGO_URI as string;
@@ -34,27 +35,34 @@ const SpacesSchema = new mongoose.Schema({
   Creator: { type: mongoose.Schema.ObjectId },
   Users: { type: [mongoose.Schema.ObjectId], default: [] }, // Defining the type of elements in the array
   Author: String,
+  isExpired: { type: Boolean, default: false }, // Changed to Mongoose Boolean type
 });
 
 export const Users = mongoose.model("User", UserSchema);
 export const Spaces = mongoose.model("Space", SpacesSchema);
 
-// // Scheduling a job to run daily at midnight to remove expired spaces
-// schedule.scheduleJob("0 0 * * *", async function () {
-//   const now = new Date();
-//   try {
-//     const result = await Spaces.deleteMany({ Expiry: { $lt: now } });
-//     console.log(`Removed ${result.deletedCount} expired spaces.`);
-//   } catch (error) {
-//     console.error("Error removing expired spaces:", error);
-//     try {
-//       console.log(`Error removing spaces first time retrying the process...`);
-//       const result = await Spaces.deleteMany({ Expiry: { $lt: now } });
-//       console.log(`Removed ${result.deletedCount} expired spaces.`);
-//     } catch (e) {
-//       console.log(
-//         `Error removing spaces second time and stopping the process...`
-//       );
-//     }
-//   }
-// });
+// Scheduling a job to run every minute to check and mark expired spaces
+schedule.scheduleJob("* * * * *", async function () {
+  const now = new Date();
+  try {
+    const result = await Spaces.updateMany(
+      { Expiry: { $lt: now } },
+      { isExpired: true }
+    );
+    console.log("Expired spaces updated:", result);
+  } catch (error) {
+    console.error("Error updating expired spaces:", error);
+    try {
+      console.log("Retrying the process to update expired spaces...");
+      const result = await Spaces.updateMany(
+        { Expiry: { $lt: now } },
+        { isExpired: true }
+      );
+      console.log("Expired spaces updated on retry:", result);
+    } catch (e) {
+      console.log(
+        "Failed to update expired spaces on retry. Stopping process..."
+      );
+    }
+  }
+});
