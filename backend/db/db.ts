@@ -41,44 +41,46 @@ const SpacesSchema = new mongoose.Schema({
 export const Users = mongoose.model("User", UserSchema);
 export const Spaces = mongoose.model("Space", SpacesSchema);
 
+
 const filterSpaces = async () => {
-  const spaces = await Spaces.find();
-  const nowYear = new Date().getUTCFullYear();
-  const nowMonth = new Date().getMonth();
-  const nowDate = new Date().getDate();
-  const nowHours = new Date().getHours();
-  const nowMinutes = new Date().getMinutes();
-  const nowSeconds = new Date().getSeconds();
-  let expiredSpacesCount = 0;
-  spaces.map(async (space) => {
-    const spaceToTimeYear = new Date(space.ToTime).getUTCFullYear();
-    const spaceToTimeMonth = new Date(space.ToTime).getMonth();
-    const spaceToTimeDate = new Date(space.ToTime).getDate();
-    const spaceToTimeHours = new Date(space.ToTime).getHours();
-    const spaceToTimeMinutes = new Date(space.ToTime).getMinutes();
-    const spaceToTimeSeconds = new Date(space.ToTime).getSeconds();
-    if (
-      nowYear > spaceToTimeYear ||
-      nowMonth > spaceToTimeMonth ||
-      nowDate > spaceToTimeDate ||
-      nowHours > spaceToTimeHours ||
-      nowMinutes > spaceToTimeMinutes ||
-      nowSeconds > spaceToTimeSeconds
-    ) {
-      if (!space.isExpired) {
+  try {
+    const spaces = await Spaces.find({ isExpired: false });
+
+    // Get current time in UTC
+    const nowUtc = new Date();
+
+    let expiredSpacesCount = 0;
+
+    for (const space of spaces) {
+      // Space end time in UTC
+      const spaceEndTimeUtc = new Date(space.ToTime);
+
+      console.log(`Current time (UTC): ${nowUtc.toISOString()}`);
+      console.log(`Space end time (UTC): ${spaceEndTimeUtc.toISOString()}`);
+
+      // Check if the space has expired
+      if (nowUtc > spaceEndTimeUtc) {
+        console.log(`Space ${space._id} has expired.`);
         expiredSpacesCount++;
-        await Spaces.updateOne(
-          {
-            _id: space._id,
-          },
-          {
-            isExpired: true,
-          }
-        );
+
+        // Update the space's isExpired status
+        await Spaces.updateOne({ _id: space._id }, { isExpired: true });
+        console.log(`Space ${space._id} marked as expired.`);
+      } else {
+        console.log(`Space ${space._id} has not expired yet.`);
       }
     }
-  });
-  console.log(`${expiredSpacesCount} spaces expired...`);
+
+    console.log(
+      `${expiredSpacesCount} spaces have expired at ${new Date().toISOString()}.`
+    );
+  } catch (error) {
+    console.error("Error filtering spaces:", error);
+  }
 };
 
-schedule.scheduleJob("* * * * *", filterSpaces);
+// Run the function to test
+filterSpaces();
+
+// Schedule the job to run every 5 seconds
+setInterval(filterSpaces, 5000); // 5000 milliseconds = 5 seconds
