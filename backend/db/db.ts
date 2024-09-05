@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import schedule from "node-schedule";
 import dotenv from "dotenv";
-import { boolean } from "zod";
 dotenv.config();
 
 const mongoUri: string = process.env.MONGO_URI as string;
@@ -51,19 +50,5 @@ schedule.scheduleJob("* * * * *", async function () {
     console.log("Expired spaces updated based on ToTime:", result);
   } catch (error) {
     console.error("Error updating expired spaces based on ToTime:", error);
-    try {
-      console.log(
-        "Retrying the process to update expired spaces based on ToTime..."
-      );
-      const result = await Spaces.updateMany(
-        { ToTime: { $lt: now } }, // Retry the same condition
-        { isExpired: true }
-      );
-      console.log("Expired spaces updated on retry based on ToTime:", result);
-    } catch (e) {
-      console.log(
-        "Failed to update expired spaces on retry. Stopping process..."
-      );
-    }
   }
 });
