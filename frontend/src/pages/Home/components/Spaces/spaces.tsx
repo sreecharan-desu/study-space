@@ -55,7 +55,7 @@ export default function Spaces() {
       }
     };
     fetchSpaces();
-    setInterval(() => fetchSpaces(), 10 * 1000);
+    setInterval(() => fetchSpaces(), 5 * 1000);
   }, [isAuth, setSpaces]);
 
   const validateSpaces = () => {
