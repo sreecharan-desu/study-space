@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="800px" height="800px" viewBox="0 0 800 800" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="StudySpace-Logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <!-- Book Base - Made thicker and bolder -->
-        <path d="M150,650 C150,580 650,580 650,650 L650,150 C650,80 150,80 150,150 L150,650 Z" 
-              fill="#2171CD" opacity="1"/>
-        <path d="M150,150 C150,80 650,80 650,150 C650,220 150,220 150,150 Z" 
-              fill="#1557A0"/>
+        <!-- Book Base - Made bolder with stronger color -->
+        <path d="M100,700 C100,620 700,620 700,700 L700,100 C700,20 100,20 100,100 L100,700 Z" 
+              fill="#1E90FF" opacity="1"/>
+        <path d="M100,100 C100,20 700,20 700,100 C700,180 100,180 100,100 Z" 
+              fill="#0066CC"/>
         
-        <!-- Pages - Increased contrast -->
-        <path d="M180,620 C180,560 620,560 620,620 L620,180 C620,120 180,120 180,180 L180,620 Z" 
+        <!-- Pages - Increased contrast with pure white -->
+        <path d="M140,660 C140,590 660,590 660,660 L660,140 C660,70 140,70 140,140 L140,660 Z" 
               fill="#FFFFFF" opacity="1"/>
         
-        <!-- Desk Lamp - Made larger and brighter -->
-        <g transform="translate(320, 270)" fill="#FFC000">
-            <path d="M0,0 L90,90 L120,60 L30,-30 Z"/>
-            <circle cx="135" cy="75" r="30"/>
+        <!-- Desk Lamp - Enlarged and brighter yellow -->
+        <g transform="translate(280, 230)" fill="#FFD700">
+            <path d="M0,0 L120,120 L160,80 L40,-40 Z"/>
+            <circle cx="180" cy="100" r="40"/>
         </g>
         
-        <!-- Study Elements - Made thicker and darker -->
-        <g transform="translate(250, 350)" fill="#000000">
-            <rect x="0" y="0" width="180" height="15" rx="3"/>
-            <rect x="0" y="40" width="150" height="15" rx="3"/>
-            <rect x="0" y="80" width="210" height="15" rx="3"/>
+        <!-- Study Elements - Thicker and darker black -->
+        <g transform="translate(200, 350)" fill="#000000">
+            <rect x="0" y="0" width="280" height="25" rx="5"/>
+            <rect x="0" y="60" width="240" height="25" rx="5"/>
+            <rect x="0" y="120" width="320" height="25" rx="5"/>
         </g>
         
-        <!-- Decorative Elements - Made more prominent -->
-        <circle cx="400" cy="120" r="40" fill="#2171CD" opacity="0.8"/>
-        <circle cx="520" cy="250" r="30" fill="#2171CD" opacity="0.6"/>
-        <circle cx="280" cy="250" r="30" fill="#2171CD" opacity="0.6"/>
+        <!-- Decorative Elements - Larger and more vibrant -->
+        <circle cx="400" cy="120" r="60" fill="#1E90FF" opacity="0.9"/>
+        <circle cx="550" cy="250" r="45" fill="#1E90FF" opacity="0.8"/>
+        <circle cx="250" cy="250" r="45" fill="#1E90FF" opacity="0.8"/>
     </g>
 </svg>
