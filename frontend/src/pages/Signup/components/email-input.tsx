@@ -12,7 +12,7 @@ export default function Email() {
   return (
     <input
       type="email"
-      placeholder="2638978@iitb.ac.in"
+      placeholder="o210000@rguktong.ac.in"
       className={`w-full p-3 mb-3 border rounded-md transition-shadow duration-300 ease-in-out ${
         isFocused
           ? "border-black shadow-md ring-2 ring-black"

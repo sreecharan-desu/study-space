@@ -74,10 +74,8 @@ export default function Spaces() {
     return (
       <>
         <TopBar />
-        <div className="ml-10 mt-10">
-          There are no new spaces available. Go to Joined spaces to see the
-          spaces you joined.
-        </div>
+        <NoSpacesLandingPage isAuthenticated={isAuth} />
+
       </>
     );
   } else if (
@@ -86,9 +84,7 @@ export default function Spaces() {
   ) {
     return (
       <>
-        <div className="ml-10 mt-10">
-          There are no new spaces available. Create a Space Now!.
-        </div>
+        <NoSpacesLandingPage isAuthenticated={isAuth} />
       </>
     );
   } else {
@@ -156,4 +152,36 @@ export default function Spaces() {
       </>
     );
   }
+}
+
+import Button from "../Navbar/Button";
+
+export function NoSpacesLandingPage({ isAuthenticated }: { isAuthenticated: boolean }) {
+
+
+  return (
+    <div className="min-h-svh flex flex-col items-center justify-center text-black font-sans px-6">
+      <div className="text-center max-w-lg animate-fadeIn">
+        <div className="flex justify-center mb-6">
+          <img src="/logo.svg" className="w-16 h-16" alt="StudySpace Logo" />
+        </div>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+          No Study Spaces Yet
+        </h1>
+        <p className="text-lg md:text-xl text-black mb-8">
+          {isAuthenticated
+            ? "It looks like there are no new spaces available. Check your joined spaces or create a new one!"
+            : "No spaces are available right now. Sign up to join or create a study space!"}
+        </p>
+        {isAuthenticated
+            ? <></>
+            :      <Suspense fallback="Loading...">
+            <Button text="Create a Space" space_id="" />
+          </Suspense>
+          }
+                
+      </div>
+      {/* <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-900 to-transparent" /> */}
+    </div>
+  );
 }

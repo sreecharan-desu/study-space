@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Footer from "../pages/Home/components/Footer/footer"; // Adjust the import path as needed
 
 const MainLayout = ({ children }: any) => {

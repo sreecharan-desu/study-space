@@ -58,7 +58,7 @@ export default function Signin() {
 
             <p className="mt-3 text-sm text-gray-900">
               <div className="mt-4 text-sm text-red-600 font-semibold text-center">
-                *Please only enter your college mail to continue
+                *Ensure that credentials are correct before signing in.
               </div>
               <p
                 className="flex justify-center m-1"
@@ -71,7 +71,14 @@ export default function Signin() {
                 >
                   Signup
                 </a>
+     
               </p>
+              <a
+                  className="underline font-bold cursor-pointer"
+                  onClick={()=>navigate("/")}
+                >
+                  Go Home
+                </a>
             </p>
           </div>
         </div>
