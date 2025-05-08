@@ -52,13 +52,7 @@ export default function HomePage() {
         <WarningMessage />
       </Suspense>
       <Suspense fallback="Loading">
-        {isAuthenticated ? (
-          <>
-            <Spaces />
-          </>
-        ) : (
-          <Spaces />
-        )}
+      <Spaces />
       </Suspense>
     </>
   );

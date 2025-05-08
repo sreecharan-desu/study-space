@@ -91,9 +91,9 @@ export default function Signup() {
                   <Suspense fallback={<div>Loading Signup Button...</div>}>
                     <SignupButton />
                   </Suspense>
-                  <div className="mt-4 text-sm text-red-600 font-semibold">
-                    *Please only enter your college mail to continue
-                  </div>
+                  <div className="mt-4 text-sm text-red-600 font-semibold text-center">
+                *Ensure that credentials are correct before signing up.
+              </div>
                   <p className="mt-1 text-sm text-gray-900">
                     Already have an account?&nbsp;
                     <a
@@ -103,6 +103,12 @@ export default function Signup() {
                       Signin
                     </a>
                   </p>
+                  <a
+                  className="underline font-bold cursor-pointer"
+                  onClick={()=>navigate("/")}
+                >
+                  Go Home
+                </a>
                 </>
               </div>
             </div>
