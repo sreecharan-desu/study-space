@@ -10,11 +10,12 @@ import {
 import { FETCH_SPACES_API, JOIN_SPACE_API } from "../../../apis/apis";
 
 type PropsType = {
-  text: string;
+  text: string | JSX.Element;
   space_id: string;
+  className?: string;
 };
 
-export default function Join_Create_Space({ text, space_id }: PropsType) {
+export default function Join_Create_Space({ text, space_id,className }: PropsType) {
   const setGenerateMessage = useSetRecoilState(generate_message);
   const setMessage = useSetRecoilState(message);
   const setMessageStatus = useSetRecoilState(message_status);
@@ -101,7 +102,7 @@ export default function Join_Create_Space({ text, space_id }: PropsType) {
   return (
     <>
       <button
-        className="px-4 py-1 bg-white text-black hover:bg-black hover:text-white font-semibold rounded ml-2"
+        className={`${className} px-4 py-1 rounded-full bg-white text-black hover:bg-black hover:text-white font-semibold ml-2`}
         style={{ border: "2px solid black" }}
         onClick={() => onClickHandler(space_id)}
       >

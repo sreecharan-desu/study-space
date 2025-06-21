@@ -11,7 +11,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="flex justify-between bg-white shadow-md p-6">
+      <div className="flex justify-between bg-white shadow-md p-6 sticky top-0 z-50">
         <div>
           <Suspense fallback="Loading...">
             <Heading text={"StudySpace"} />
