@@ -304,19 +304,7 @@ export function NoSpacesLandingPage({ isAuthenticated = false }) {
         />
 
         <div className="max-w-4xl text-center z-10 space-y-8">
-          {/* Logo */}
-          <div className="flex items-center justify-center">
-            <div className="relative inline-block">
-              <Logo />
-              <svg className="absolute -right-12 -top-8 w-12 h-12 stroke-gray-200 animate-pulse opacity-60">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="none" strokeWidth="1" />
-              </svg>
-              <svg className="absolute -left-12 top-6 w-8 h-8 stroke-gray-300 animate-pulse opacity-40" style={{ animationDelay: '0.5s' }}>
-                <circle cx="12" cy="12" r="10" strokeWidth="1" fill="none" />
-                <path d="M12 8V12L15 15" strokeWidth="1" fill="none" />
-              </svg>
-            </div>
-          </div>
+     
 
           {/* Main heading */}
           <h1 className="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter">
