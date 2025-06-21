@@ -28,7 +28,7 @@ No description available
 **Sections:**
 
 
-**1.** [Recoil Atoms for Global State Management in the Frontend](#section-link-module-module_miscellaneous_utilities-section-optimized_recoil_atoms_for_global_state_management_in_the_frontend)
+**1.** Recoil Atoms for Global State Management in the Frontend
 
 ---
 
@@ -39,9 +39,9 @@ No description available
 **Sections:**
 
 
-**1.** [Signup Password Input: Capturing and Storing User Passwords with Recoil](#section-link-module-module_authentication_security-section-optimized_signup_password_input:_capturing_and_storing_user_passwords_with_recoil)
+**1.** Signup Password Input: Capturing and Storing User Passwords with Recoil
 
-**2.** [StudySpace API Endpoints: User Authentication, Space Management, and Data Retrieval](#section-link-module-module_authentication_security-section-optimized_studyspace_api_endpoints:_user_authentication,_space_management,_and_data_retrieval)
+**2.** StudySpace API Endpoints: User Authentication, Space Management, and Data Retrieval
 
 ---
 
@@ -52,9 +52,9 @@ No description available
 **Sections:**
 
 
-**1.** [Displaying Joined Spaces: Fetching and Rendering User-Specific Spaces with Recoil State Management](#section-link-module-module_data_models_validation-section-optimized_displaying_joined_spaces:_fetching_and_rendering_user-specific_spaces_with_recoil_state_management)
+**1.** Displaying Joined Spaces: Fetching and Rendering User-Specific Spaces with Recoil State Management
 
-**2.** [Mongoose Schema Definitions and Automated Expiry for 'Spaces' with Timezone Handling](#section-link-module-module_data_models_validation-section-optimized_mongoose_schema_definitions_and_automated_expiry_for_'spaces'_with_timezone_handling)
+**2.** Mongoose Schema Definitions and Automated Expiry for 'Spaces' with Timezone Handling
 
 ---
 
