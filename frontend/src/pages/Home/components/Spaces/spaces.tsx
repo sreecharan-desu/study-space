@@ -157,19 +157,6 @@ import {useRef} from "react";
 import Button from "../Navbar/Button";
 import { Plus, Users, BookOpen, Search, ArrowRight, GraduationCap, Lightbulb } from "lucide-react";
 
-// Simple logo component with updated styling
-const Logo = ({ size = 80 }) => (
-  <div className={`w-${size/4} h-${size/4} bg-black rounded-full flex items-center justify-center relative overflow-hidden group`}>
-    <div className="absolute inset-2 border-2 border-white rounded-full"></div>
-    <div className="text-white text-2xl font-bold relative z-10">S</div>
-    <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
-    <svg className="absolute -left-4 top-0 w-6 h-6 stroke-gray-300 animate-spin opacity-30" style={{ animationDuration: '8s' }}>
-      <circle cx="12" cy="12" r="10" strokeWidth="1" fill="none" />
-      <path d="M12 6V12L16 14" strokeWidth="1" fill="none" />
-    </svg>
-  </div>
-);
-
 export function NoSpacesLandingPage({ isAuthenticated = false }) {
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
