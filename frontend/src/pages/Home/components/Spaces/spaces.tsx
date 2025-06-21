@@ -161,7 +161,7 @@ import { Plus, Users, BookOpen, Search, ArrowRight, GraduationCap, Lightbulb } f
 const Logo = ({ size = 80 }) => (
   <div className={`w-${size/4} h-${size/4} bg-black rounded-full flex items-center justify-center relative overflow-hidden group`}>
     <div className="absolute inset-2 border-2 border-white rounded-full"></div>
-    <div className="text-white text-2xl font-bold relative z-10">SS</div>
+    <div className="text-white text-2xl font-bold relative z-10">S</div>
     <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full opacity-80"></div>
     <svg className="absolute -left-4 top-0 w-6 h-6 stroke-gray-300 animate-spin opacity-30" style={{ animationDuration: '8s' }}>
       <circle cx="12" cy="12" r="10" strokeWidth="1" fill="none" />
