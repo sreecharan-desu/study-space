@@ -6,7 +6,6 @@
 
 
 
-
 ```mermaid
 graph TB
     A[Repository] --> B[Modules: 3]
