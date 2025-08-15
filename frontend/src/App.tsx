@@ -11,6 +11,7 @@ const Createdpaces = React.lazy(
 const JoinedSpaces = React.lazy(
   () => import("./pages/JoinedSpaces/JoinedSpaces")
 );
+
 const HostaSpace = React.lazy(
   () => import("./pages/HostaNewSpace/HostaNewSpace")
 );
