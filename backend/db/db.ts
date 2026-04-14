@@ -38,6 +38,9 @@ const SpacesSchema = new mongoose.Schema({
 });
 
 
+/**
+ * Users utility.
+ */
 export const Users = mongoose.model("User", UserSchema);
 export const Spaces = mongoose.model("Space", SpacesSchema);
 
