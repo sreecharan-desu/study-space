@@ -2,6 +2,9 @@ import express from "express";
 import { Router } from "express";
 import { userRoute } from "./user/user";
 
+/**
+ * mainRoute utility.
+ */
 export const mainRoute: Router = Router();
 mainRoute.use(express.json());
 mainRoute.use(express.urlencoded({ extended: true }));
