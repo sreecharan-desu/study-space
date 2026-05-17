@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import { Users } from "../../../db/db";
 dotenv.config();
 
+/**
+ * authMiddleware utility.
+ */
 export const authMiddleware = async (
   req: Request,
   res: Response,
