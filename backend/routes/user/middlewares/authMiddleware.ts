@@ -34,6 +34,9 @@ export const authMiddleware = async (
   }
 };
 
+/**
+ * getUsernameByEmail utility.
+ */
 export const getUsernameByEmail = async (
   email: string
 ): Promise<string | null> => {
