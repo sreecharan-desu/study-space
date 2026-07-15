@@ -44,6 +44,9 @@ export const getUsernameByEmail = async (
   return user ? user.Username : null;
 };
 
+/**
+ * getUserIdByEmail utility.
+ */
 export const getUserIdByEmail = async (email: string) => {
   const user = await Users.findOne({ Email: email });
   if (!user) {
