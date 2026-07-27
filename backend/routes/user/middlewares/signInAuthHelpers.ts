@@ -15,6 +15,9 @@ const signinSchema = zod.object({
     .min(6, { message: "Your password must contain at least 6 characters" }),
 });
 
+/**
+ * validateSigninForm utility.
+ */
 export const validateSigninForm: RequestHandler = (
   req: Request,
   res: Response,
