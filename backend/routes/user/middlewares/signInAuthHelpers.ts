@@ -43,6 +43,9 @@ export const validateSigninForm: RequestHandler = (
   }
 };
 
+/**
+ * fetchDbByEmail utility.
+ */
 export const fetchDbByEmail = async (email: string) => {
   const user = await Users.findOne({
     Email: email,
