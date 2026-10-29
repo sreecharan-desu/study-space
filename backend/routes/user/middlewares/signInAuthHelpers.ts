@@ -53,6 +53,9 @@ export const fetchDbByEmail = async (email: string) => {
   return user != null;
 };
 
+/**
+ * comparePasswords utility.
+ */
 export const comparePasswords = async (
   email: string,
   password: string
