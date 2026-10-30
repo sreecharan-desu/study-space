@@ -71,6 +71,9 @@ export const comparePasswords = async (
   return { success: match };
 };
 
+/**
+ * fetchUser utility.
+ */
 export const fetchUser: RequestHandler = async (
   req: Request,
   res: Response,
